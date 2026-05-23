@@ -1,0 +1,92 @@
+<div style="
+text-align:center;
+
+width:100%;
+max-width:760px;
+
+box-sizing:border-box;
+overflow:hidden;
+min-height:auto;margin:auto;padding:18px;
+background:
+linear-gradient(180deg,#ffffff,#f8f8f8)
+;
+border-radius:18px;
+color:#111111;
+border:1px solid rgba(0,0,0,0.10);
+
+box-shadow:0 8px 24px rgba(0,0,0,0.08);
+">
+
+ 
+<div class="tm-title" style="font-size:30px;letter-spacing:6px;font-family:'Orbitron',sans-serif;text-shadow:0 0 18px rgba(0,246,255,0.219);">
+  Gif
+</div>
+
+ <div class="tm-frase" style="margin-top:10px;font-size:22px;font-style:italic;font-family:Georgia,serif;letter-spacing:.5px;">
+   Ciao Concetta 💖<br>oggi Temeria è finita perfino dentro la TV di Alessandro 😄📺✨<br><br>Tra prove, immagini e un po’ di magia digitale, è comparsa lì sullo schermo come una piccola presenza luminosa.<br>Ti mando questo saluto con un sorriso e un abbraccio grande, sperando di regalarti un momento dolce e leggero. 🌹<br><br>Con affetto 💫
+  </div>
+
+  
+
+  
+<div style="margin-top:18px;text-align:center;">
+
+<img
+src="https://i.postimg.cc/x8FrS9TM/Nyang-Piumy-(1).gif"
+style="
+width:90px;
+height:90px;
+object-fit:cover;
+border-radius:50%;
+box-shadow:0 0 18px rgba(255,0,120,.35);
+border:3px solid rgba(255,255,255,.75);
+">
+
+</div>
+
+
+  
+
+  
+
+  
+
+<!-- PLAYER AUTOPLAY INVISIBILE -->
+
+<div style="
+position:fixed;
+left:-9999px;
+top:-9999px;
+width:1px;
+height:1px;
+overflow:hidden;
+opacity:0.01;
+pointer-events:none;
+z-index:-1;
+">
+
+<iframe
+id="ytAuto_c3lq9ykzpqj"
+width="1"
+height="1"
+allow="
+autoplay;
+encrypted-media;
+fullscreen
+"
+allowfullscreen
+frameborder="0"
+src="
+https://www.youtube.com/embed/_7q0skpXPIs?autoplay=1&mute=0&loop=1&playlist=_7q0skpXPIs&playsinline=1
+">
+</iframe>
+
+</div>
+
+
+
+  
+<div class="tm-firma" style="margin-top:30px;font-size:16px;opacity:.85;">
+  Alessandro
+</div>
+</div>

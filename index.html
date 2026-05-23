@@ -1,0 +1,2816 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌌 Temeria HUB - Creative Suite</title>
+
+<style>
+:root{
+  --bg:#0b0f1a;
+  --box:#111827;
+  --box2:#1f2937;
+  --txt:#ffffff;
+  --muted:#cbd5e1;
+  --violet:#c084fc;
+  --cyan:#38bdf8;
+  --green:#22c55e;
+  --gold:#facc15;
+  --red:#ef4444;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  padding:20px;
+  background:radial-gradient(circle at top,#182033,#080b16 55%);
+  color:var(--txt);
+  font-family:Arial,sans-serif;
+}
+.container{max-width:1150px;margin:auto;}
+h1,h2{text-align:center;color:var(--violet);}
+.box{
+  background:rgba(17,24,39,.95);
+  padding:18px;
+  border-radius:18px;
+  margin-top:18px;
+  box-shadow:0 0 20px rgba(0,0,0,.28);
+  border:1px solid rgba(255,255,255,.06);
+}
+input,textarea,select{
+  width:100%;
+  padding:12px;
+  margin:7px 0;
+  border:none;
+  border-radius:12px;
+  box-sizing:border-box;
+  font-size:15px;
+  background:#f8fafc;
+  color:#020617;
+}
+textarea{min-height:110px;resize:vertical;}
+button{
+  padding:12px 18px;
+  margin:5px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:bold;
+}
+.menu{text-align:center;margin:20px 0;}
+.menu button{font-size:16px;padding:14px 22px;}
+.main-btn{background:linear-gradient(90deg,var(--cyan),var(--violet));color:black;}
+.green-btn{background:var(--green);color:black;}
+.copy-btn{background:white;color:black;}
+.danger{background:var(--red);color:white;}
+.safe-btn{background:var(--cyan);color:black;}
+.pro-btn{background:var(--violet);color:black;}
+.dual-btn{background:var(--gold);color:black;}
+.soft{background:var(--box2);color:white;}
+.grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+}
+@media(min-width:900px){
+  .grid{grid-template-columns:1fr 1fr;}
+  .grid3{grid-template-columns:1fr 1fr 1fr;}
+}
+.output{
+  white-space:pre-wrap;
+  background:#020617;
+  padding:15px;
+  border-radius:12px;
+  color:#e5e7eb;
+  min-height:120px;
+  line-height:1.55;
+  border:1px solid rgba(255,255,255,.06);
+}
+.editor-output{
+  min-height:320px;
+  width:100%;
+  color:#e5e7eb;
+  background:#020617;
+  font-family:Arial,sans-serif;
+  line-height:1.55;
+}
+.small,.small-note{
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.4;
+}
+.card{
+  background:var(--box2);
+  padding:10px;
+  border-radius:10px;
+  margin:7px 0;
+  cursor:pointer;
+}
+.preview img,.preview video{
+  max-width:400px;
+  width:100%;
+  border-radius:15px;
+}
+.mode-label{
+  display:inline-block;
+  padding:6px 12px;
+  border-radius:999px;
+  background:var(--box2);
+  margin:4px 0 10px;
+}
+.section{display:none;}
+.section.active{display:block;}
+label{display:block;color:var(--muted);font-size:13px;margin-top:8px;}
+.rangeLine{display:flex;gap:10px;align-items:center;}
+.rangeLine input{flex:1;}
+.rangeLine span{width:34px;text-align:center;color:var(--gold);font-weight:bold;}
+.helpBox{
+  background:rgba(56,189,248,.09);
+  border:1px solid rgba(56,189,248,.22);
+  border-radius:14px;
+  padding:12px;
+  margin:8px 0;
+}
+#toast{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#111827;
+  color:white;
+  padding:14px 20px;
+  border-radius:14px;
+  opacity:0;
+  transition:.3s;
+  z-index:9999;
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+  pointer-events:none;
+}
+
+#toast.show{
+  opacity:1;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>🌌 Temeria HUB - Creative Suite</h1>
+
+<p class="small" style="text-align:center;">
+Un unico pannello per creare pagine SAFE/PRO,
+idee video YouTube/Facebook e testi/canzoni.
+</p>
+
+<div class="menu">
+
+  <button class="green-btn" type="button" data-target="pagine">
+    🌐 Generatore Pagine
+  </button>
+
+  <button class="main-btn" type="button" data-target="videoIdeas">
+    🎬 Generatore Idee Video
+  </button>
+
+  <button class="dual-btn" type="button" data-target="textForge">
+    📝 Generatore Testi
+  </button>
+
+  <button class="pro-btn" type="button" data-target="socialWar">
+    ⚔️ Social War Machine
+  </button>
+
+  <button class="green-btn" type="button" data-target="siteForge">
+    🛠️ Site Forge
+  </button>
+
+  <button class="dual-btn" type="button" data-target="lyricsForge">
+    🎵 Lyrics Site Forge
+  </button>
+
+  <button class="safe-btn" type="button"
+  onclick="window.open('https://temeria.vercel.app/','_blank')">
+    🎬 Temeria Media Forge
+  </button>
+
+  <button class="pro-btn" type="button"
+  onclick="window.open('gif-cards.html','_blank')">
+    🎞️ GIF/Card Tab Generator
+  </button>
+
+</div>
+<!-- ====================== PAGINE ====================== -->
+<section id="pagine" class="section active">
+<h2>🚀 Temeria ULTRA Generator PRO MAX</h2>
+<p class="small-note" style="text-align:center;">
+Generatore evoluto: puoi generare una singola modalità oppure creare automaticamente <b>SAFE Facebook</b> e <b>PRO Sito</b> insieme.
+</p>
+
+<div class="box">
+<h3>⚙️ Dati progetto</h3>
+
+<select id="mode">
+  <option value="safe">SAFE Facebook - immagine pulita + bottone reale sotto</option>
+  <option value="pro">PRO Sito - immagine cliccabile immersiva</option>
+</select>
+
+<input id="title" placeholder="Titolo">
+<textarea id="desc" placeholder="Descrizione"></textarea>
+<input id="video" placeholder="Video.mp4 oppure URL completo">
+<input id="imageSite" placeholder="Immagine SITO oppure URL completo">
+<input id="imageFB" placeholder="Immagine FACEBOOK pulita (opzionale) oppure URL completo">
+<input id="page" placeholder="Nome pagina base">
+
+<div class="helpBox">
+  <h3 style="margin:0 0 8px;color:var(--cyan);">🌍 Destinazione / Hosting</h3>
+  <p class="small-note" style="margin-top:0;">
+    Usa <b>Vercel / PerSé</b> per il vecchio sistema. Usa <b>Netlify AlexCreative</b> per creare automaticamente link con <b>/public/</b>.
+  </p>
+  <div class="grid grid3">
+    <div>
+      <label>Destinazione</label>
+      <select id="destinazione" onchange="aggiornaLinkPronti()">
+        <option value="vercel">Vercel / PerSé - link manuali o base vecchia</option>
+        <option value="netlify">Netlify / AlexCreative - auto public</option>
+      </select>
+    </div>
+    <div>
+      <label>Dominio Vercel / PerSé</label>
+      <input id="vercelBase" value="https://alex-creative-site.vercel.app" oninput="aggiornaLinkPronti()">
+    </div>
+    <div>
+      <label>Dominio Netlify</label>
+      <input id="netlifyBase" value="https://alexcreative.netlify.app" oninput="aggiornaLinkPronti()">
+    </div>
+  </div>
+  <div class="grid grid3">
+    <div>
+      <label>Cartella Netlify online</label>
+      <input id="netlifyFolder" value="public" oninput="aggiornaLinkPronti()">
+    </div>
+    <div>
+      <label>Versione anti-cache</label>
+      <input id="cacheVersion" value="1" oninput="aggiornaLinkPronti()" placeholder="es: 1, 2, 3">
+    </div>
+    <div>
+      <label>Home / bottone ritorno</label>
+      <input id="homeLink" value="https://alexcreative.netlify.app" oninput="aggiornaLinkPronti()">
+    </div>
+  </div>
+  <button class="soft" type="button" onclick="riempiEsempioNetlifyTemeria()">🪄 Esempio Netlify Temeria</button>
+  <button class="soft" type="button" onclick="aggiornaLinkPronti()">🔄 Aggiorna link pronti</button>
+</div>
+
+<button class="green-btn" type="button" onclick="generaSingola()">🚀 Genera modalità scelta</button>
+<button class="dual-btn" type="button" onclick="generaDoppia()">⚡ Genera SAFE + PRO insieme</button>
+<button type="button" onclick="salvaPagina()">💾 Salva progetto</button>
+
+<button class="pro-btn" type="button" onclick="generaNomeUnico()">
+🚀 Nome automatico anti-cache
+</button>
+</div>
+<div id="preview" class="box preview"></div>
+
+<div class="grid">
+  <div class="box">
+    <h3>🟢 Codice SAFE Facebook</h3>
+    <textarea id="outputSafe"></textarea>
+    <button class="copy-btn" type="button" onclick="copyInput('outputSafe')">📋 Copia SAFE</button>
+    <button type="button" onclick="downloadMode('safe')">⬇️ Scarica SAFE</button>
+  </div>
+
+  <div class="box">
+    <h3>🟣 Codice PRO Sito</h3>
+    <textarea id="outputPro"></textarea>
+    <button class="copy-btn" type="button" onclick="copyInput('outputPro')">📋 Copia PRO</button>
+    <button type="button" onclick="downloadMode('pro')">⬇️ Scarica PRO</button>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="box">
+    <h3>🔗 Link SAFE</h3>
+    <textarea id="linkSafe"></textarea>
+    <button class="copy-btn" type="button" onclick="copyInput('linkSafe')">📋 Copia link SAFE</button>
+  </div>
+
+  <div class="box">
+    <h3>🔗 Link PRO</h3>
+    <textarea id="linkPro"></textarea>
+    <button class="copy-btn" type="button" onclick="copyInput('linkPro')">📋 Copia link PRO</button>
+  </div>
+</div>
+
+<div class="box">
+<h3>🔍 Link pronti / controllo Netlify</h3>
+<textarea id="linkPronti" class="output editor-output" placeholder="Qui compariranno i link pronti per test browser, Facebook Debugger e post."></textarea>
+<button class="copy-btn" type="button" onclick="copyInput('linkPronti')">📋 Copia link pronti</button>
+</div>
+
+<div class="box">
+<h3>🎞 Archivio Progetti</h3>
+<div id="lista"></div>
+</div>
+</section>
+
+<!-- ====================== VIDEO IDEAS ====================== -->
+<section id="videoIdeas" class="section">
+<h2>🎬 Generatore Idee Video YouTube - Temeria</h2>
+<p class="small" style="text-align:center;">
+Crea scaletta, descrizione, hashtag, copertina e post social per i tuoi video musicali, trailer, short e anteprime.
+</p>
+
+<div class="box">
+<h3>⚙️ Dati del video</h3>
+
+<input id="yt_titolo" placeholder="Titolo video - es: Temeria, La Fata delle Piume">
+
+<select id="yt_tipo">
+  <option value="Short YouTube">Short YouTube</option>
+  <option value="Trailer musicale">Trailer musicale</option>
+  <option value="Lyrics video">Lyrics video</option>
+  <option value="Anteprima brano">Anteprima brano</option>
+  <option value="Video emozionale">Video emozionale</option>
+  <option value="Promo sito">Promo sito</option>
+</select>
+
+<select id="yt_emozione">
+  <option value="magica, dolce e misteriosa">Magica, dolce e misteriosa</option>
+  <option value="romantica e malinconica">Romantica e malinconica</option>
+  <option value="oscura, rock e intensa">Oscura, rock e intensa</option>
+  <option value="epica e cinematografica">Epica e cinematografica</option>
+  <option value="leggera, familiare e affettuosa">Leggera, familiare e affettuosa</option>
+  <option value="ironica e giocosa">Ironica e giocosa</option>
+</select>
+
+<select id="yt_durata">
+  <option value="15 secondi">15 secondi</option>
+  <option value="30 secondi">30 secondi</option>
+  <option value="45 secondi">45 secondi</option>
+  <option value="60 secondi">60 secondi</option>
+  <option value="2 minuti">2 minuti</option>
+  <option value="3 minuti">3 minuti</option>
+</select>
+
+<textarea id="yt_frasi" placeholder="Frasi, testo, strofe o idee da inserire nel video"></textarea>
+<input id="yt_link" placeholder="Link finale opzionale - sito, YouTube, Spotify, Vercel">
+<input id="yt_firma" placeholder="Firma/autore - es: Alex Creative / Alessandro / Temeria">
+
+<button class="main-btn" type="button" onclick="generaVideoIdea()">🚀 Genera idea video</button>
+<button class="danger" type="button" onclick="pulisciVideoIdea()">🧹 Pulisci</button>
+</div>
+
+<div class="grid">
+  <div class="box">
+    <h3>🎞 Scaletta video</h3>
+    <div id="yt_scaletta" class="output"></div>
+    <button class="copy-btn" type="button" onclick="copyTextBlock('yt_scaletta')">📋 Copia scaletta</button>
+  </div>
+
+  <div class="box">
+    <h3>🖼 Idea copertina</h3>
+    <div id="yt_copertina" class="output"></div>
+    <button class="copy-btn" type="button" onclick="copyTextBlock('yt_copertina')">📋 Copia copertina</button>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="box">
+    <h3>📄 Descrizione YouTube</h3>
+    <div id="yt_descrizione" class="output"></div>
+    <button class="copy-btn" type="button" onclick="copyTextBlock('yt_descrizione')">📋 Copia descrizione</button>
+  </div>
+
+  <div class="box">
+    <h3>#️⃣ Hashtag</h3>
+    <div id="yt_hashtag" class="output"></div>
+    <button class="copy-btn" type="button" onclick="copyTextBlock('yt_hashtag')">📋 Copia hashtag</button>
+  </div>
+</div>
+
+<div class="box">
+<h3>📘 Post Facebook SAFE</h3>
+<div id="yt_facebook" class="output"></div>
+<button class="copy-btn" type="button" onclick="copyTextBlock('yt_facebook')">📋 Copia post Facebook</button>
+</div>
+
+<div class="box">
+<h3>💾 Archivio idee salvate</h3>
+<button type="button" onclick="salvaIdeaVideo()">💾 Salva questa idea</button>
+<div id="yt_archivio"></div>
+</div>
+</section>
+
+<!-- ====================== TEXT FORGE ====================== -->
+<section id="textForge" class="section">
+<h2>📝 Temeria Text Forge PRO MAX</h2>
+<p class="small" style="text-align:center;">
+Generatore avanzato per canzoni, poesie, testi criptici, post, descrizioni YouTube e concept narrativi.
+</p>
+
+<div class="box">
+<h3>⚙️ Cabina creativa</h3>
+
+<div class="grid grid3">
+  <div>
+    <label>Tipo testo</label>
+    <select id="txt_tipo">
+      <option>Canzone completa</option>
+      <option>Poesia</option>
+      <option>Ritornello potente</option>
+      <option>Strofa rock</option>
+      <option>Testo criptico</option>
+      <option>Descrizione YouTube</option>
+      <option>Post Facebook SAFE</option>
+      <option>Concept album</option>
+      <option>Messaggio dolce</option>
+    </select>
+    
+  </div>
+
+  <div>
+    <label>Stile</label>
+    <select id="txt_stile">
+      <option>Regina di Cuori</option>
+      <option>Temeria fata delle piume</option>
+      <option>Rock moderno</option>
+      <option>Dark romantico</option>
+      <option>Epico cinematografico</option>
+      <option>Dolce familiare</option>
+      <option>Misterioso simbolico</option>
+      <option>Pop poetico</option>
+    </select>
+  </div>
+
+  <div>
+    <label>Lingua</label>
+    <select id="txt_lingua">
+      <option>Italiano</option>
+      <option>Italiano con tocchi spagnoli</option>
+      <option>Spagnolo</option>
+      <option>Italiano poetico semplice</option>
+    </select>
+  </div>
+</div>
+
+<div class="grid grid3">
+  <div><label>Tema centrale</label><input id="txt_tema" placeholder="es: amore, caos, destino, ossessione"></div>
+  <div><label>Nome/personaggio</label><input id="txt_nome" placeholder="es: Temeria, Regina, Concetta, Mamma"></div>
+  <div><label>Titolo provvisorio</label><input id="txt_titolo" placeholder="es: La Fata delle Piume"></div>
+</div>
+
+<label>Parole chiave, frasi, immagini da usare</label>
+<textarea id="txt_idee" placeholder="es: piume, luna, porta segreta, cuore, vento, notte, destino..."></textarea>
+
+<label>Parole da evitare o cose da non dire</label>
+<input id="txt_vietate" placeholder="es: non usare parole troppo banali, non citare marchi, niente frasi troppo dirette">
+
+<div class="grid">
+  <div>
+    <label>Motore argomentazione profonda</label>
+    <select id="txt_argomento">
+      <option value="verita">Verità nascosta / ciò che non viene visto</option>
+      <option value="identita">Identità / maschera / doppia vita</option>
+      <option value="tempo">Tempo / memoria / rimpianto</option>
+      <option value="societa">Società / algoritmo / valore invisibile</option>
+      <option value="amore">Amore / distanza / desiderio</option>
+      <option value="rinascita">Caduta / ferita / rinascita</option>
+    </select>
+  </div>
+  <div>
+    <label>Forma narrativa</label>
+    <select id="txt_forma">
+      <option value="canzone">Canzone con immagini forti</option>
+      <option value="monologo">Monologo poetico</option>
+      <option value="confessione">Confessione intima</option>
+      <option value="manifesto">Manifesto artistico</option>
+      <option value="favolaOscura">Favola oscura simbolica</option>
+    </select>
+  </div>
+</div>
+
+<div class="grid grid3">
+  <div>
+    <label>Intensità emotiva</label>
+    <div class="rangeLine">
+      <input id="txt_intensita" type="range" min="1" max="10" value="7" oninput="document.getElementById('txt_numI').textContent=this.value">
+      <span id="txt_numI">7</span>
+    </div>
+  </div>
+
+  <div>
+    <label>Cripticità</label>
+    <div class="rangeLine">
+      <input id="txt_cripto" type="range" min="1" max="10" value="8" oninput="document.getElementById('txt_numC').textContent=this.value">
+      <span id="txt_numC">8</span>
+    </div>
+  </div>
+
+  <div>
+    <label>Energia</label>
+    <div class="rangeLine">
+      <input id="txt_energia" type="range" min="1" max="10" value="6" oninput="document.getElementById('txt_numE').textContent=this.value">
+      <span id="txt_numE">6</span>
+    </div>
+  </div>
+</div>
+
+<button class="main-btn" type="button" onclick="txtGeneraTutto()">✨ Genera testo PRO MAX</button>
+<button class="dual-btn" type="button" onclick="txtVaria()">🔀 Crea variazione</button>
+<button class="soft" type="button" onclick="txtRiempiTemeria()">🪶 Esempio Temeria</button>
+<button class="soft" type="button" onclick="txtRiempiRegina()">♥️ Esempio Regina</button>
+<button class="danger" type="button" onclick="txtPulisci()">🧹 Pulisci</button>
+</div>
+
+<div class="grid">
+  <div class="box">
+    <h3>📜 Testo principale modificabile</h3>
+    <textarea id="txt_testo" class="output editor-output" placeholder="Qui apparirà il testo generato. Puoi modificarlo liberamente, correggerlo, aggiungere strofe e poi salvarlo."></textarea>
+    <button class="copy-btn" type="button" onclick="copyTextBlock('txt_testo')">📋 Copia testo</button>
+    <button class="green-btn" type="button" onclick="txtSalva()">💾 Salva idea</button>
+<button class="dual-btn" type="button" onclick="txtDuplicaVersione()">🪞 Duplica versione</button>
+    <button class="dual-btn" type="button" onclick="txtMigliora('grammatica')">🧹 Correggi base</button>
+    <button class="main-btn" type="button" onclick="txtMigliora('poetico')">✨ Più poetico</button>
+    <button class="soft" type="button" onclick="txtMigliora('rock')">🔥 Più rock</button>
+    <button class="soft" type="button" onclick="txtMigliora('criptico')">🕯️ Più criptico</button>
+    <button class="soft" type="button" onclick="txtScava()">🧠 Scava nel tema</button>
+  </div>
+
+  <div class="box">
+    <h3>🎵 Struttura / Note artistiche</h3>
+    <div id="txt_note" class="output"></div>
+    <button class="copy-btn" type="button" onclick="copyTextBlock('txt_note')">📋 Copia note</button>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="box">
+    <h3>🏷️ Titoli alternativi</h3>
+    <div id="txt_titoli" class="output"></div>
+    <button class="copy-btn" type="button" onclick="copyTextBlock('txt_titoli')">📋 Copia titoli</button>
+  </div>
+
+  <div class="box">
+    <h3>📣 Versione social / YouTube</h3>
+    <div id="txt_social" class="output"></div>
+    <button class="copy-btn" type="button" onclick="copyTextBlock('txt_social')">📋 Copia social</button>
+  </div>
+</div>
+
+<div class="box">
+<h3>🔍 Controllo qualità Temeria</h3>
+<div id="txt_check" class="output"></div>
+<button class="copy-btn" type="button" onclick="copyTextBlock('txt_check')">📋 Copia controllo</button>
+</div>
+
+<div class="box">
+<h3>🌌 Temeria Text Lab PRO</h3>
+<p class="small">
+Salva canzoni complete, versioni, prompt musicali e copie pronte per Suno.
+</p>
+
+<div class="grid grid3">
+  <div>
+    <label>Titolo progetto</label>
+    <input id="lab_title" placeholder="es: La Memoria del Silenzio">
+  </div>
+
+  <div>
+    <label>Versione</label>
+    <input id="lab_version" value="v1" placeholder="es: v1, v2 Suno, finale">
+  </div>
+
+  <div>
+    <label>Stato</label>
+    <select id="lab_status">
+      <option>Bozza</option>
+      <option>In lavorazione</option>
+      <option>Pronta per Suno</option>
+      <option>Pubblicata</option>
+      <option>Archiviata</option>
+    </select>
+  </div>
+</div>
+
+<label>Prompt musicale</label>
+<textarea id="lab_prompt" placeholder="Prompt per Suno / Udio / altro generatore"></textarea>
+
+<label>Note progetto</label>
+<textarea id="lab_notes" placeholder="Note artistiche, idee, versioni da provare, link, appunti..."></textarea>
+
+<div>
+  <button class="green-btn" type="button" onclick="labSaveProject()">💾 Salva progetto PRO</button>
+  <button class="main-btn" type="button" onclick="labPrepareSuno()">🎵 Prepara testo per Suno</button>
+  <button class="copy-btn" type="button" onclick="copyInput('lab_suno')">📋 Copia Suno</button>
+  <button class="dual-btn" type="button" onclick="labDownloadTxt()">⬇️ Scarica TXT</button>
+  <button class="soft" type="button" onclick="labDownloadJson()">⬇️ Scarica JSON</button>
+</div>
+
+<label>Testo pronto per Suno</label>
+<textarea id="lab_suno" class="editor-output" placeholder="Qui verrà creato il testo pulito per Suno"></textarea>
+
+<h3>📚 Archivio progetti Text Lab</h3>
+<div id="lab_archive"></div>
+</div>
+
+<div class="box">
+<h3>💾 Vecchio archivio locale testi</h3>
+<p class="small">Archivio precedente del generatore. Lo lasciamo per compatibilità.</p>
+<div id="txt_archivio"></div>
+</div>
+</section>
+<!-- ====================== LYRICS SITE FORGE ====================== -->
+<section id="lyricsForge" class="section">
+<h2>🎵 Lyrics Site Forge - Alex Creative</h2>
+<p class="small" style="text-align:center;">
+Genera blocchi testi pronti da incollare nella sezione Lyrics del sito Alex Creative.
+</p>
+
+<div class="box">
+<h3>⚙️ Dati canzone</h3>
+
+<input id="ly_title" placeholder="Titolo canzone - es: Regina di Cuori">
+<input id="ly_subtitle" placeholder="Descrizione poetica breve">
+<input id="ly_cover" placeholder="URL copertina immagine">
+<select id="ly_fit">
+  <option value="cover">Cover - riempie la card</option>
+  <option value="contain">Contain - immagine intera senza tagli</option>
+  <option value="top">Cover - centrata in alto</option>
+  <option value="left">Cover - centrata a sinistra</option>
+</select>
+<input id="ly_spotify" placeholder="Link Spotify">
+<input id="ly_youtube" placeholder="Link YouTube">
+<textarea id="ly_text" class="editor-output" placeholder="Incolla qui il testo completo della canzone"></textarea>
+
+<button class="main-btn" type="button" onclick="lyGenerate()">✨ Genera blocco Lyrics</button>
+<button class="soft" type="button" onclick="lyExampleRegina()">♥️ Esempio Regina</button>
+<button class="soft" type="button" onclick="lyExampleTemeria()">🪶 Esempio Temeria</button>
+<button class="danger" type="button" onclick="lyClear()">🧹 Pulisci</button>
+</div>
+
+<div class="box">
+<h3>✅ Blocco pronto per page-lyrics</h3>
+<textarea id="ly_output" class="editor-output" placeholder="Qui uscirà il blocco HTML da incollare dentro la video-grid della sezione Testi"></textarea>
+<button class="copy-btn" type="button" onclick="copyInput('ly_output')">📋 Copia blocco Lyrics</button>
+
+<button class="green-btn" type="button" onclick="lySendToSiteForge()">
+🚀 Invia al Site Forge
+</button>
+</div>
+</section>
+<section id="socialWar" class="section">
+<h2>⚔️ Temeria Social War Machine</h2>
+<p class="small" style="text-align:center;">
+Strategia sicura: Facebook ➜ YouTube ➜ Sito AlexCreative. Niente link Netlify diretto nel post Facebook.
+</p>
+
+<div class="box">
+<h3>🎯 Dati campagna</h3>
+
+<div class="grid grid3">
+  <div>
+    <label>Titolo progetto</label>
+    <input id="sw_titolo" placeholder="es: Temeria – La Fata delle Piume">
+  </div>
+  <div>
+    <label>Durata video</label>
+    <select id="sw_durata">
+      <option value="30 secondi">30 secondi</option>
+      <option value="45 secondi">45 secondi</option>
+      <option value="60 secondi">60 secondi</option>
+      <option value="Short 15 secondi">Short 15 secondi</option>
+    </select>
+  </div>
+  <div>
+    <label>Atmosfera</label>
+    <select id="sw_mood">
+      <option value="magica, poetica e misteriosa">Magica, poetica e misteriosa</option>
+      <option value="rock, intensa e cinematografica">Rock, intensa e cinematografica</option>
+      <option value="dolce, emozionale e luminosa">Dolce, emozionale e luminosa</option>
+      <option value="oscura, elegante e simbolica">Oscura, elegante e simbolica</option>
+    </select>
+  </div>
+</div>
+
+<label>Frase forte / tema centrale</label>
+<textarea id="sw_frase" placeholder="es: Una fata invisibile attraversa musica, luce e memoria."></textarea>
+
+<div class="grid">
+  <div>
+    <label>Link YouTube finale</label>
+    <input id="sw_youtube" placeholder="https://youtu.be/...">
+  </div>
+  <div>
+    <label>Link sito AlexCreative / Netlify</label>
+    <input id="sw_sito" placeholder="https://alexcreative.netlify.app/public/temeria-fata-piume.html">
+  </div>
+</div>
+
+<div class="grid grid3">
+  <div>
+    <label>Formato video</label>
+    <select id="sw_formato">
+      <option value="youtube">YouTube classico 1280x720</option>
+      <option value="short">Short/Reel 1080x1920</option>
+      <option value="facebook">Facebook preview 1200x630</option>
+    </select>
+  </div>
+  <div>
+    <label>Secondi musica</label>
+    <input id="sw_musica" value="30" placeholder="30">
+  </div>
+  <div>
+    <label>Firma</label>
+    <input id="sw_firma" value="Alex Creative" placeholder="Alex Creative">
+  </div>
+</div>
+
+<button class="main-btn" type="button" onclick="swGeneraTutto()">⚔️ Genera strategia completa</button>
+<button class="soft" type="button" onclick="swEsempioTemeria()">🪶 Esempio Temeria</button>
+<button class="danger" type="button" onclick="swPulisci()">🧹 Pulisci</button>
+</div>
+
+<div class="grid">
+  <div class="box">
+    <h3>📘 Post Facebook sicuro</h3>
+    <div id="sw_fb" class="output"></div>
+    <button class="copy-btn" type="button" onclick="copyTextBlock('sw_fb')">📋 Copia post FB</button>
+  </div>
+  <div class="box">
+    <h3>💬 Primo commento Facebook</h3>
+    <div id="sw_commento" class="output"></div>
+    <button class="copy-btn" type="button" onclick="copyTextBlock('sw_commento')">📋 Copia commento</button>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="box">
+    <h3>🎬 Descrizione YouTube</h3>
+    <div id="sw_yt_desc" class="output"></div>
+    <button class="copy-btn" type="button" onclick="copyTextBlock('sw_yt_desc')">📋 Copia descrizione</button>
+  </div>
+  <div class="box">
+    <h3>#️⃣ Hashtag YouTube/Facebook</h3>
+    <div id="sw_tags" class="output"></div>
+    <button class="copy-btn" type="button" onclick="copyTextBlock('sw_tags')">📋 Copia hashtag</button>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="box">
+    <h3>🎞 Scaletta video 30 secondi</h3>
+    <div id="sw_scaletta" class="output"></div>
+    <button class="copy-btn" type="button" onclick="copyTextBlock('sw_scaletta')">📋 Copia scaletta</button>
+  </div>
+  <div class="box">
+    <h3>🖼 Prompt copertina centrata</h3>
+    <div id="sw_cover" class="output"></div>
+    <button class="copy-btn" type="button" onclick="copyTextBlock('sw_cover')">📋 Copia prompt</button>
+  </div>
+</div>
+
+<div class="box">
+<h3>🧭 Strategia pubblicazione</h3>
+<div id="sw_strategy" class="output"></div>
+<button class="copy-btn" type="button" onclick="copyTextBlock('sw_strategy')">📋 Copia strategia</button>
+</div>
+</section>
+
+<section id="siteForge" class="section">
+<h2>🛠️ TEMERIA SITE FORGE ULTIMATED</h2>
+<p class="small" style="text-align:center;">
+Aggiorna il sito Alex Creative incollando l’index e generando una nuova versione con video YouTube e Spotify.
+</p>
+
+<div class="box">
+<h3>📥 Index originale</h3>
+<textarea id="sf_index" class="editor-output" placeholder="Incolla qui tutto il codice index.html del sito Alex Creative"></textarea>
+</div>
+
+<div class="box">
+<h3>🎬 Nuovo contenuto da inserire</h3>
+
+<div class="grid grid3">
+  <div>
+    <label>Titolo</label>
+    <input id="sf_title" placeholder="Temeria – La Fata delle Piume">
+  </div>
+
+  <div>
+  <label>Tipo</label>
+  <select id="sf_type">
+    <option value="youtube">Video YouTube normale</option>
+    <option value="trailerYoutube">Trailer da YouTube</option>
+    <option value="trailerTemeria">Trailer da Temeria Video HTML</option>
+    <option value="spotify">Spotify</option>
+    <option value="both">YouTube + Spotify</option>
+  </select>
+</div>
+
+  <div>
+    <label>Posizione</label>
+    <select id="sf_position">
+      <option value="replaceTemeria">Sostituisci teaser Temeria</option>
+      <option value="addTop">Aggiungi in alto ai video</option>
+      <option value="addBottom">Aggiungi in basso ai video</option>
+    </select>
+  </div>
+</div>
+
+<label>Link YouTube</label>
+<input id="sf_youtube" placeholder="https://www.youtube.com/watch?v=...">
+
+<label>Link Spotify</label>
+<input id="sf_spotify" placeholder="https://open.spotify.com/track/...">
+
+<label>Descrizione</label>
+<textarea id="sf_desc" placeholder="Descrizione breve del contenuto"></textarea>
+
+<button class="main-btn" type="button" onclick="sfRun()">⚔️ Genera index aggiornato</button>
+<button class="soft" type="button" onclick="sfExampleTemeria()">🪶 Esempio Temeria</button>
+<button class="danger" type="button" onclick="sfClear()">🧹 Pulisci</button>
+</div>
+
+<div class="box">
+<h3>✅ Index aggiornato pronto</h3>
+<textarea id="sf_output" class="editor-output" placeholder="Qui uscirà il nuovo index completo"></textarea>
+<button class="copy-btn" type="button" onclick="copyInput('sf_output')">📋 Copia index aggiornato</button>
+</div>
+</section>
+</div>
+<script>
+/* ====================== NAVIGAZIONE ROBUSTA ====================== */
+function showSection(id){
+  const sections = document.querySelectorAll('.section');
+  sections.forEach(section => {
+    section.classList.remove('active');
+    section.style.display = 'none';
+  });
+
+  const target = document.getElementById(id);
+  if(target){
+    target.classList.add('active');
+    target.style.display = 'block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }else{
+    alert('Sezione non trovata: ' + id);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.menu button[data-target]').forEach(btn => {
+    btn.addEventListener('click', () => showSection(btn.dataset.target));
+  });
+
+  showSection('pagine');
+  caricaLista();
+  caricaArchivioVideo();
+ txtArchivio();
+labRefreshArchive();
+aggiornaLinkPronti();
+});
+
+/* ====================== UTILITY COPIA ====================== */
+async function copyInput(id){
+  const el = document.getElementById(id);
+
+  try{
+    await navigator.clipboard.writeText(el.value);
+    toast("📋 Copiato!");
+  }catch(err){
+    alert("Errore copia");
+  }
+}
+
+function copyTextBlock(id){
+  const el = document.getElementById(id);
+  const text = (el.tagName === "TEXTAREA" || el.tagName === "INPUT") ? el.value : el.textContent;
+ navigator.clipboard.writeText(text).then(()=>toast('📋 Copiato!'));
+}
+function toast(msg){
+  const t = document.getElementById("toast");
+  if(!t){
+    alert(msg);
+    return;
+  }
+
+  t.textContent = msg;
+  t.classList.add("show");
+
+  setTimeout(() => {
+    t.classList.remove("show");
+  }, 2500);
+}
+/* ====================== GENERATORE PAGINE ====================== */
+const DEFAULT_VERCEL="https://alex-creative-site.vercel.app";
+const DEFAULT_NETLIFY="https://alexcreative.netlify.app";
+
+function val(id){ return document.getElementById(id).value.trim(); }
+function setVal(id,v){ document.getElementById(id).value=v; }
+
+function stripSlash(s){ return String(s||'').replace(/^\/+|\/+$/g,''); }
+function stripEndSlash(s){ return String(s||'').replace(/\/+$/,''); }
+function isHttp(s){ return /^https?:\/\//i.test(String(s||'')); }
+
+function getDest(){ return val('destinazione') || 'vercel'; }
+function getVercelBase(){ return stripEndSlash(val('vercelBase') || DEFAULT_VERCEL); }
+function getNetlifyBase(){ return stripEndSlash(val('netlifyBase') || DEFAULT_NETLIFY); }
+function getNetlifyFolder(){ return stripSlash(val('netlifyFolder') || 'public'); }
+function getHomeLink(){ return stripEndSlash(val('homeLink') || (getDest()==='netlify' ? getNetlifyBase() : getVercelBase())); }
+function getCacheVersion(){ return stripSlash(val('cacheVersion')); }
+
+function addVersion(url){
+  const v=getCacheVersion();
+  if(!url || !v) return url;
+  return url+(url.includes('?')?'&':'?')+'v='+encodeURIComponent(v);
+}
+
+function buildPath(base,folder,file){
+  let cleanBase=stripEndSlash(base);
+  let cleanFolder=stripSlash(folder);
+  let cleanFile=String(file||'').replace(/^\/+/, '');
+  return cleanBase + (cleanFolder ? '/' + cleanFolder : '') + '/' + cleanFile;
+}
+
+function assetUrl(file,withCache=true){
+  if(!file) return '';
+  const f=String(file).trim();
+  let out='';
+  if(isHttp(f)) out=f;
+  else if(getDest()==='netlify') out=buildPath(getNetlifyBase(),getNetlifyFolder(),f);
+  else out=buildPath(getVercelBase(),' ',f).replace('/ /','/');
+  return withCache ? addVersion(out) : out;
+}
+
+function pageUrl(pageName,withCache=true){
+  const clean=cleanPage(pageName || 'pagina-temeria');
+  const file=clean+'.html';
+  let out='';
+  if(getDest()==='netlify') out=buildPath(getNetlifyBase(),getNetlifyFolder(),file);
+  else out=buildPath(getVercelBase(),' ',file).replace('/ /','/');
+  return withCache ? addVersion(out) : out;
+}
+
+function cacheBust(url){
+  if(!url) return "";
+  return url+(url.includes("?")?"&":"?")+"t="+Date.now();
+}
+
+function cleanDesc(text){
+  return text
+    .split(String.fromCharCode(10)).join(" ")
+    .split(String.fromCharCode(13)).join(" ")
+    .replace(/\s+/g," ")
+    .trim();
+}
+
+function cleanPage(text){
+  let s=String(text||'').toLowerCase().trim();
+  let out="";
+  let lastDash=false;
+  for(let i=0;i<s.length;i++){
+    let c=s[i];
+    let ok=(c>="a"&&c<="z")||(c>="0"&&c<="9");
+    if(ok){
+      out+=c;
+      lastDash=false;
+    }else{
+      if(!lastDash){
+        out+="-";
+        lastDash=true;
+      }
+    }
+  }
+  while(out.endsWith("-")) out=out.slice(0,-1);
+  while(out.startsWith("-")) out=out.slice(1);
+  return out || 'pagina-temeria';
+}
+
+const modeEl=()=>document.getElementById("mode");
+const titleEl=()=>document.getElementById("title");
+const descEl=()=>document.getElementById("desc");
+const videoEl=()=>document.getElementById("video");
+const imageEl=()=>document.getElementById("imageSite");
+const imageFBEl=()=>document.getElementById("imageFB");
+const pageEl=()=>document.getElementById("page");
+const outputSafe=()=>document.getElementById("outputSafe");
+const outputPro=()=>document.getElementById("outputPro");
+const linkSafe=()=>document.getElementById("linkSafe");
+const linkPro=()=>document.getElementById("linkPro");
+const preview=()=>document.getElementById("preview");
+const lista=()=>document.getElementById("lista");
+
+function getData(){
+  if(!titleEl().value || !videoEl().value || !imageEl().value || !pageEl().value){
+    alert("Compila almeno titolo, video, immagine sito e pagina");
+    return null;
+  }
+
+  const title=titleEl().value.trim();
+  const desc=cleanDesc(descEl().value);
+  const video=assetUrl(videoEl().value.trim(),true);
+  const img=assetUrl(imageEl().value.trim(),true);
+  const fb=imageFBEl().value ? assetUrl(imageFBEl().value.trim(),true) : img;
+  const pageBase=cleanPage(pageEl().value);
+  const home=getHomeLink();
+
+  pageEl().value=pageBase;
+  aggiornaLinkPronti();
+  return {title,desc,video,img,fb,pageBase,home};
+}
+
+function aggiornaLinkPronti(){
+  const pageBase=cleanPage(pageEl().value || 'temeria-video');
+  const videoName=videoEl().value.trim() || 'temeria-preview.mp4';
+  const imgName=imageEl().value.trim() || 'temeria-preview.jpg';
+  const fbName=imageFBEl().value.trim() || 'temeria-fb2.jpg';
+
+  const pagina=pageUrl(pageBase,true);
+  const video=assetUrl(videoName,true);
+  const img=assetUrl(imgName,true);
+  const fb=assetUrl(fbName,true);
+
+  const info =
+`DESTINAZIONE: ${getDest()==='netlify'?'Netlify / AlexCreative':'Vercel / PerSé'}
+
+LINK DA POSTARE SU FACEBOOK:
+${pagina}
+
+LINK PAGINA SENZA ANTI-CACHE:
+${pageUrl(pageBase,false)}
+
+IMMAGINE SITO:
+${img}
+
+IMMAGINE FACEBOOK:
+${fb}
+
+VIDEO:
+${video}
+
+REGOLA IMPORTANTE:
+Netlify usa la cartella online "${getNetlifyFolder()}". Non tradurre mai public in pubblico.`;
+
+  const box=document.getElementById('linkPronti');
+  if(box) box.value=info;
+}
+
+function riempiEsempioNetlifyTemeria(){
+  setVal('destinazione','netlify');
+  setVal('netlifyBase','https://alexcreative.netlify.app');
+  setVal('netlifyFolder','public');
+  setVal('homeLink','https://alexcreative.netlify.app');
+  setVal('cacheVersion', String(Number(getCacheVersion()||0)+1));
+  setVal('title','temeria-video');
+  setVal('desc','Scopri Temeria Video – un’esperienza unica tra musica, emozione e creatività.');
+  setVal('video','temeria-preview.mp4');
+  setVal('imageSite','temeria-preview.jpg');
+  setVal('imageFB','temeria-fb2.jpg');
+  setVal('page','temeria-video');
+  aggiornaLinkPronti();
+}
+
+function generaSingola(){
+
+  // 🔥 AGGIUNGI QUESTA RIGA
+  setVal('cacheVersion', String(Date.now()));
+
+  const d=getData();
+  if(!d) return;
+
+  if(modeEl().value==="safe"){
+    generaSafe(d,d.pageBase);
+    previewSafe(d);
+  }else{
+    generaPro(d,d.pageBase);
+    previewPro(d);
+  }
+}
+
+function generaDoppia(){
+
+  // 🔥 AGGIUNGI QUESTA
+  setVal('cacheVersion', String(Date.now()));
+
+  const d=getData();
+  if(!d) return;
+  generaSafe(d,d.pageBase+"-safe");
+  generaPro(d,d.pageBase+"-pro");
+  previewDouble(d);
+}
+
+function generaSafe(d,pageName){
+  const url=pageUrl(pageName,true);
+  outputSafe().value=formatHTML(buildSafeHTML(d.title,d.desc,d.video,d.img,d.fb,url,d.home));
+  linkSafe().value=url;
+}
+
+function generaPro(d,pageName){
+  const url=pageUrl(pageName,true);
+  outputPro().value=formatHTML(buildProHTML(d.title,d.desc,d.video,d.img,d.fb,url,d.home));
+  linkPro().value=url;
+}
+
+function previewSafe(d){
+  preview().innerHTML =
+    '<span class="mode-label">🟢 SAFE Facebook</span><h3>'+d.title+'</h3>' +
+    '<img src="'+cacheBust(d.img)+'"><br><br>' +
+    '<button class="safe-btn" style="padding:14px 28px;border-radius:30px;font-size:16px;">▶ Ascolta / Guarda</button>' +
+    '<p class="small-note">Immagine pulita + bottone reale sotto. Consigliata per Facebook.</p>' +
+    '<video controls poster="'+cacheBust(d.fb)+'"><source src="'+d.video+'" type="video/mp4"></video>';
+}
+
+function previewPro(d){
+  preview().innerHTML =
+    '<span class="mode-label">🟣 PRO Sito</span><h3>'+d.title+'</h3>' +
+    '<img src="'+cacheBust(d.img)+'"><br><br>' +
+    '<button class="pro-btn" style="padding:14px 28px;border-radius:30px;font-size:16px;">✨ Entra nell atmosfera</button>' +
+    '<p class="small-note">Esperienza immersiva e più artistica. Consigliata per sito o link diretto.</p>' +
+    '<video controls poster="'+cacheBust(d.fb)+'"><source src="'+d.video+'" type="video/mp4"></video>';
+}
+
+function previewDouble(d){
+  preview().innerHTML =
+    '<span class="mode-label">⚡ Generazione doppia completata</span><h3>'+d.title+'</h3>' +
+    '<div class="grid"><div><h4>🟢 SAFE Facebook</h4><img src="'+cacheBust(d.img)+'"><br><br><button class="safe-btn">▶ Ascolta / Guarda</button></div>' +
+    '<div><h4>🟣 PRO Sito</h4><img src="'+cacheBust(d.img)+'"><br><br><button class="pro-btn">✨ Entra nell atmosfera</button></div></div>' +
+    '<p class="small-note">Creati due codici separati e due link separati: uno SAFE e uno PRO.</p>';
+}
+
+function buildMeta(title,desc,fb,url,type){
+  const cleanTitle = escapeAttr(title);
+  const cleanDesc = escapeAttr(desc || 'Pagina personale creata con passione: musica, immagini e parole.');
+  return '<meta charset="UTF-8">' +
+  '<meta name="viewport" content="width=device-width, initial-scale=1.0">' +
+  '<title>'+escapeHTML(title)+'</title>' +
+  '<meta name="description" content="'+cleanDesc+'">' +
+  '<meta name="author" content="Alex Creative">' +
+  '<link rel="icon" href="'+fb+'">' +
+  '<meta property="og:title" content="'+cleanTitle+'">' +
+  '<meta property="og:description" content="'+cleanDesc+'">' +
+  '<meta property="og:image" content="'+fb+'">' +
+  '<meta property="og:image:secure_url" content="'+fb+'">' +
+  '<meta property="og:image:width" content="1200">' +
+  '<meta property="og:image:height" content="630">' +
+  '<meta property="og:url" content="'+url+'">' +
+  '<meta property="og:type" content="'+type+'">' +
+  '<meta property="og:site_name" content="Alex Creative Site">' +
+  '<meta name="twitter:card" content="summary_large_image">' +
+  '<meta name="twitter:title" content="'+cleanTitle+'">' +
+  '<meta name="twitter:description" content="'+cleanDesc+'">' +
+  '<meta name="twitter:image" content="'+fb+'">';
+}
+
+function escapeHTML(s){
+  return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+}
+function escapeAttr(s){ return escapeHTML(s); }
+
+function buildSafeHTML(title,desc,video,img,fb,url,homeLink){
+  let endScript='</scr'+'ipt>';
+  const humanDesc = desc || 'Una piccola pagina personale fatta di musica, immagini e parole.';
+  const home = homeLink || getHomeLink();
+  return '<!DOCTYPE html><html lang="it"><head>'+
+  buildMeta(title,humanDesc,fb,url,"website")+
+  '<style>'+ 
+  'body{background:radial-gradient(circle at top,#111827,#000 60%);color:white;text-align:center;font-family:Arial,sans-serif;margin:0;padding:0;}'+
+  '.container{max-width:760px;margin:auto;padding:20px;}'+
+  '.trust{display:inline-block;margin-top:18px;padding:8px 14px;border-radius:999px;background:rgba(34,197,94,.16);border:1px solid rgba(34,197,94,.45);color:#bbf7d0;font-size:14px;}'+
+  '.hero-img{width:100%;border-radius:22px;margin-top:18px;box-shadow:0 0 28px rgba(255,255,255,0.16);}'+
+  '.home-btn{display:inline-block;margin:18px auto 6px;padding:12px 22px;border-radius:30px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:white;font-weight:bold;text-decoration:none;}'+
+  '.play-btn{margin:22px auto 12px;padding:16px 34px;border:none;border-radius:35px;background:linear-gradient(90deg,#7dd3fc,#c084fc);color:black;font-size:18px;font-weight:bold;cursor:pointer;box-shadow:0 0 25px rgba(192,132,252,0.45);}'+
+  '.play-btn:hover{transform:scale(1.03);}'+
+  'video{display:none;width:100%;border-radius:20px;margin-top:20px;box-shadow:0 0 28px rgba(255,255,255,.12);}'+
+  'h1{font-size:34px;margin:18px 0 8px;}p{font-size:18px;line-height:1.55;}'+
+  '.note{font-size:14px;color:#cbd5e1;margin-top:10px;}'+
+ '.footer{margin-top:25px;color:#94a3b8;font-size:13px;}'+
+'#toast{'+
+'position:fixed;'+
+'bottom:20px;'+
+'right:20px;'+
+'background:#111827;'+
+'color:white;'+
+'padding:14px 20px;'+
+'border-radius:14px;'+
+'opacity:0;'+
+'transition:.3s;'+
+'z-index:9999;'+
+'border:1px solid rgba(255,255,255,.1);'+
+'box-shadow:0 10px 30px rgba(0,0,0,.35);'+
+'pointer-events:none;'+
+'}'+
+'#toast.show{'+
+'opacity:1;'+
+'}'+
+
+  '</style>'+ 
+  '</head><body><div class="container">'+
+  '<div class="trust">✓ Pagina personale creata da Alex Creative</div>'+
+  '<img src="'+img+'" class="hero-img" alt="'+escapeAttr(title)+'">'+
+  '<a href="'+home+'" class="home-btn">🏠 Torna alla home</a>'+
+  '<h1>'+escapeHTML(title)+'</h1>'+
+  '<p>Questa è una pagina personale creata con passione 💙<br><br>'+escapeHTML(humanDesc)+'</p>'+
+  '<p class="note">Clicca il pulsante qui sotto per aprire il contenuto audio/video.</p>'+
+  '<button id="playBtn" class="play-btn" onclick="avviaVideo()">▶ Ascolta / Guarda</button>'+
+  '<video id="v" controls playsinline preload="metadata" poster="'+img+'"><source src="'+video+'" type="video/mp4"></video>'+
+  '<div class="footer">Musica, immagini e parole originali / progetto personale.</div>'+
+  '</div><script>function avviaVideo(){const v=document.getElementById("v");const btn=document.getElementById("playBtn");v.style.display="block";btn.style.display="none";setTimeout(()=>{v.play().catch(()=>{});},200);}'+endScript+'</body></html>';
+}
+
+function buildProHTML(title,desc,video,img,fb,url,homeLink){
+  let endScript='</scr'+'ipt>';
+  const home = homeLink || getHomeLink();
+  return '<!DOCTYPE html><html lang="it"><head>'+
+  buildMeta(title,desc,fb,url,"video.other")+
+  '<style>body{background:black;color:white;text-align:center;font-family:Arial,sans-serif;margin:0;padding:0;}.container{max-width:700px;margin:auto;padding:20px;}.cover{transition:0.3s;cursor:pointer;max-width:700px;margin:20px auto;position:relative;}.cover img{width:100%;border-radius:20px;box-shadow:0 0 30px rgba(255,255,255,0.18);}.hint{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);padding:12px 22px;border-radius:30px;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);color:white;font-weight:bold;box-shadow:0 0 18px rgba(255,255,255,0.25);}.home-btn{display:block;margin:20px auto;padding:14px 26px;border-radius:30px;background:linear-gradient(90deg,#7dd3fc,#c084fc);color:black;font-weight:bold;text-decoration:none;max-width:260px;}video{display:none;width:100%;border-radius:20px;margin-top:15px;}p{font-size:18px;line-height:1.5;}</style>'+
+  '</head><body><div class="cover" onclick="apriVideo(this)"><img src="'+img+'" alt="'+escapeAttr(title)+'"><div class="hint">✨ Entra nell atmosfera</div></div><div class="container"><a href="'+home+'" class="home-btn">🏠 Torna alla home</a><h1>'+escapeHTML(title)+'</h1><p>'+escapeHTML(desc)+'</p><video id="v" controls playsinline preload="metadata" poster="'+img+'"><source src="'+video+'" type="video/mp4"></video></div><script>function apriVideo(el){el.style.opacity="0";setTimeout(()=>{el.style.display="none";const v=document.getElementById("v");v.style.display="block";v.play();},300);}'+endScript+'</body></html>';
+}
+
+function formatHTML(html){
+  return html
+    .replace(/></g, '>\n<')
+    .replace(/(<style>)/g, '$1\n')
+    .replace(/(<\/style>)/g, '\n$1')
+    .replace(/(<script>)/g, '$1\n')
+    .replace(/(<\/script>)/g, '\n$1')
+    .trim();
+}
+
+function salvaPagina(){
+  let arr=JSON.parse(localStorage.getItem("temeria")||"[]");
+  arr.push({
+    mode:modeEl().value,
+    destinazione:getDest(),
+    vercelBase:getVercelBase(),
+    netlifyBase:getNetlifyBase(),
+    netlifyFolder:getNetlifyFolder(),
+    cacheVersion:getCacheVersion(),
+    homeLink:getHomeLink(),
+    title:titleEl().value,
+    desc:descEl().value,
+    video:videoEl().value,
+    image:imageEl().value,
+    fb:imageFBEl().value,
+    page:pageEl().value
+  });
+  localStorage.setItem("temeria",JSON.stringify(arr));
+  caricaLista();
+}
+
+function caricaLista(){
+  let arr=JSON.parse(localStorage.getItem("temeria")||"[]");
+  lista().innerHTML="";
+  arr.forEach((p,i)=>{
+    lista().innerHTML += '<div class="card" onclick="loadPagina('+i+')">'+
+    (p.mode==="pro"?"🟣":"🟢")+' '+(p.title||"Senza titolo")+
+    ' <button class="danger" type="button" onclick="delPagina('+i+');event.stopPropagation()">X</button></div>';
+  });
+}
+
+function loadPagina(i){
+  let p=JSON.parse(localStorage.getItem("temeria"))[i];
+  modeEl().value=p.mode||"safe";
+  if(p.destinazione) setVal('destinazione',p.destinazione);
+  if(p.vercelBase) setVal('vercelBase',p.vercelBase);
+  if(p.netlifyBase) setVal('netlifyBase',p.netlifyBase);
+  if(p.netlifyFolder) setVal('netlifyFolder',p.netlifyFolder);
+  if(p.cacheVersion) setVal('cacheVersion',p.cacheVersion);
+  if(p.homeLink) setVal('homeLink',p.homeLink);
+  titleEl().value=p.title||"";
+  descEl().value=p.desc||"";
+  videoEl().value=p.video||"";
+  imageEl().value=p.image||"";
+  imageFBEl().value=p.fb||"";
+  pageEl().value=p.page||"";
+  aggiornaLinkPronti();
+}
+
+function delPagina(i){
+  let arr=JSON.parse(localStorage.getItem("temeria"));
+  arr.splice(i,1);
+  localStorage.setItem("temeria",JSON.stringify(arr));
+  caricaLista();
+}
+
+function downloadMode(mode){
+  const value=mode==="safe" ? outputSafe().value : outputPro().value;
+  if(!value){
+    alert("Prima genera il codice "+mode.toUpperCase());
+    return;
+  }
+  const suffix=mode==="safe" ? "-safe" : "-pro";
+  let blob=new Blob([value],{type:"text/html"});
+  let a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download=(pageEl().value||"pagina-temeria")+suffix+".html";
+  a.click();
+}
+
+/* ====================== GENERATORE VIDEO ====================== */
+function ytVal(id){ return document.getElementById(id).value.trim(); }
+function ytSet(id,txt){ document.getElementById(id).textContent=txt; }
+
+function generaVideoIdea(){
+  const titolo=ytVal('yt_titolo')||'Nuovo video Temeria';
+  const tipo=ytVal('yt_tipo');
+  const emozione=ytVal('yt_emozione');
+  const durata=ytVal('yt_durata');
+  const frasi=ytVal('yt_frasi')||'Inserire una frase poetica o una parte del testo del brano.';
+  const link=ytVal('yt_link');
+  const firma=ytVal('yt_firma')||'Alex Creative';
+
+  const scaletta=`🎬 TITOLO: ${titolo}
+
+TIPO VIDEO: ${tipo}
+DURATA: ${durata}
+ATMOSFERA: ${emozione}
+
+0-5 sec - APERTURA
+Immagine forte, luminosa o misteriosa. Entrata morbida della musica. Testo breve in sovrimpressione.
+
+5-20 sec - SVILUPPO
+Mostra il cuore del progetto: immagini, parole, dettagli, atmosfera.
+
+FRASE/TEMA CENTRALE
+${frasi}
+
+20-30/60 sec - MOMENTO WOW
+Cambio immagine, effetto luce, zoom lento, piume, stelle, cuore o elemento simbolico.
+
+CHIUSURA
+Firma: ${firma}
+Invito leggero: ascolta, scopri, visita il sito o guarda il progetto completo.
+${link ? '\nLINK DA MOSTRARE O INSERIRE: '+link : ''}`;
+
+  const copertina=`🖼 IDEA COPERTINA
+
+Stile: ${emozione}
+
+Elementi consigliati:
+- immagine principale pulita e leggibile
+- titolo grande: ${titolo}
+- un dettaglio simbolico: piuma, luce, cuore, luna, stella o ombra
+- possibile play generico originale, senza copiare loghi o stile YouTube
+
+Colori suggeriti:
+- blu notte
+- viola magico
+- oro leggero
+- bianco luminoso
+
+Formato consigliato:
+- YouTube: 1280x720
+- Facebook anteprima: 1200x630
+- Short/Reel: 1080x1920`;
+
+  const descrizione=`${titolo}
+
+Un progetto creativo firmato ${firma}.
+Atmosfera ${emozione}, tra musica, immagini e parole.
+
+${frasi}
+
+${link ? 'Scopri di più qui:\n'+link+'\n\n' : ''}Grazie per l'ascolto e per il supporto.
+
+#${safeTag(titolo)} #Temeria #AlexCreative`;
+
+  const hashtag=`#Temeria #AlexCreative #MusicaOriginale #VideoMusicale #YouTubeItalia #ShortsItalia #ArteDigitale #MusicaItaliana #CreativeProject #${safeTag(titolo)}`;
+
+  const facebook=`Sto lavorando a un nuovo progetto creativo: ${titolo}.
+
+È una piccola atmosfera fatta di musica, immagini e parole.
+Niente pubblicità, solo una pagina personale creata con passione.
+
+${link ? 'Link nei commenti o qui:\n'+link : 'Il link lo aggiungerò nei commenti.'}`;
+
+  ytSet('yt_scaletta',scaletta);
+  ytSet('yt_copertina',copertina);
+  ytSet('yt_descrizione',descrizione);
+  ytSet('yt_hashtag',hashtag);
+  ytSet('yt_facebook',facebook);
+}
+
+function safeTag(text){
+  return text.toLowerCase()
+    .replace(/[àá]/g,'a')
+    .replace(/[èé]/g,'e')
+    .replace(/[ìí]/g,'i')
+    .replace(/[òó]/g,'o')
+    .replace(/[ùú]/g,'u')
+    .replace(/[^a-z0-9]/g,'')
+    .slice(0,30) || 'TemeriaVideo';
+}
+
+function pulisciVideoIdea(){
+  ['yt_titolo','yt_frasi','yt_link','yt_firma'].forEach(id=>document.getElementById(id).value='');
+  ['yt_scaletta','yt_copertina','yt_descrizione','yt_hashtag','yt_facebook'].forEach(id=>ytSet(id,''));
+}
+
+function salvaIdeaVideo(){
+  const idea={
+    titolo:ytVal('yt_titolo')||'Idea senza titolo',
+    data:new Date().toLocaleString(),
+    scaletta:document.getElementById('yt_scaletta').textContent,
+    descrizione:document.getElementById('yt_descrizione').textContent
+  };
+  let arr=JSON.parse(localStorage.getItem('ideeTemeriaVideo')||'[]');
+  arr.push(idea);
+  localStorage.setItem('ideeTemeriaVideo',JSON.stringify(arr));
+  caricaArchivioVideo();
+}
+
+function caricaArchivioVideo(){
+  let arr=JSON.parse(localStorage.getItem('ideeTemeriaVideo')||'[]');
+  const box=document.getElementById('yt_archivio');
+  box.innerHTML='';
+  arr.forEach((i,idx)=>{
+    box.innerHTML += '<div class="card"><b>'+i.titolo+'</b><br><span class="small">'+i.data+'</span><br><button type="button" onclick="caricaIdeaVideo('+idx+')">Apri</button><button class="danger" type="button" onclick="eliminaIdeaVideo('+idx+')">X</button></div>';
+  });
+}
+
+function caricaIdeaVideo(idx){
+  let arr=JSON.parse(localStorage.getItem('ideeTemeriaVideo')||'[]');
+  const i=arr[idx];
+  document.getElementById('yt_titolo').value=i.titolo;
+  ytSet('yt_scaletta',i.scaletta);
+  ytSet('yt_descrizione',i.descrizione);
+}
+
+function eliminaIdeaVideo(idx){
+  let arr=JSON.parse(localStorage.getItem('ideeTemeriaVideo')||'[]');
+  arr.splice(idx,1);
+  localStorage.setItem('ideeTemeriaVideo',JSON.stringify(arr));
+  caricaArchivioVideo();
+}
+
+/* ====================== TEXT FORGE ====================== */
+const txtNl=String.fromCharCode(10);
+
+function txtV(id){ return document.getElementById(id).value.trim(); }
+function txtSet(id,t){
+  const el = document.getElementById(id);
+  if(el.tagName === "TEXTAREA" || el.tagName === "INPUT"){
+    el.value = t;
+  }else{
+    el.textContent = t;
+  }
+}
+function txtPick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function txtCleanWords(s){ return s ? s.split(',').map(x=>x.trim()).filter(Boolean) : []; }
+
+function txtMood(){
+  let i=Number(txtV('txt_intensita'));
+  let c=Number(txtV('txt_cripto'));
+  let e=Number(txtV('txt_energia'));
+  let out=[];
+  out.push(i>7?'intenso e bruciante':i>4?'emotivo e profondo':'delicato e sospeso');
+  out.push(c>7?'molto simbolico':c>4?'poetico con mistero':'chiaro e diretto');
+  out.push(e>7?'con spinta energica':e>4?'con movimento controllato':'lento e contemplativo');
+  return out.join(', ');
+}
+
+function txtSimboli(){
+
+  let base=[
+
+    {
+      nome:'stella',
+      articolo:'una',
+      aggettivo:'stretta'
+    },
+
+    {
+      nome:'porta',
+      articolo:'una',
+      aggettivo:'chiusa'
+    },
+
+    {
+      nome:'rosa',
+      articolo:'una',
+      aggettivo:'spezzata'
+    },
+
+    {
+      nome:'chiave',
+      articolo:'una',
+      aggettivo:'nascosta'
+    },
+
+    {
+      nome:'ombra',
+      articolo:'una',
+      aggettivo:'silenziosa'
+    },
+
+    {
+      nome:'piuma',
+      articolo:'una',
+      aggettivo:'leggera'
+    },
+
+    {
+      nome:'corona',
+      articolo:'una',
+      aggettivo:'bruciata'
+    },
+
+    {
+      nome:'luna',
+      articolo:'una',
+      aggettivo:'fredda'
+    },
+
+    {
+      nome:'voce',
+      articolo:'una',
+      aggettivo:'lontana'
+    },
+
+    {
+      nome:'fiamma',
+      articolo:'una',
+      aggettivo:'viva'
+    },
+
+    {
+      nome:'specchio',
+      articolo:'uno',
+      aggettivo:'rotto'
+    },
+
+    {
+      nome:'cuore',
+      articolo:'un',
+      aggettivo:'stretto'
+    },
+
+    {
+      nome:'vento',
+      articolo:'un',
+      aggettivo:'fermo'
+    },
+
+    {
+      nome:'fuoco',
+      articolo:'un',
+      aggettivo:'spento'
+    },
+
+    {
+      nome:'mare',
+      articolo:'un',
+      aggettivo:'immobile'
+    },
+
+    {
+      nome:'silenzio',
+      articolo:'un',
+      aggettivo:'profondo'
+    }
+
+  ];
+
+  return base;
+}
+
+function txtEvita(){
+  let e=txtV('txt_vietate');
+  return e ? txtNl+'Da evitare: '+e : '';
+}
+
+function txtGeneraTutto(){
+  let d={
+    tipo:txtV('txt_tipo'),
+    stile:txtV('txt_stile'),
+    lingua:txtV('txt_lingua'),
+    tema:txtV('txt_tema')||'destino',
+    nome:txtV('txt_nome'),
+    titolo:txtV('txt_titolo')||txtV('txt_tema')||'destino',
+    idee:txtV('txt_idee')||'luce, notte, segreto',
+    argomento:txtV('txt_argomento'),
+    forma:txtV('txt_forma')
+  };
+
+  txtSet('txt_testo',txtCreaTesto(d));
+  txtSet('txt_note',txtCreaNote(d));
+  txtSet('txt_titoli',txtCreaTitoli(d));
+  txtSet('txt_social',txtCreaSocial(d));
+  txtSet('txt_check',txtCreaCheck(d));
+}
+
+function txtCreaTesto(d){
+  let nome = d.nome ? d.nome.trim() : '';
+  let tema = d.tema || 'destino';
+  let idee = txtCleanWords(d.idee);
+  let energia = Number(txtV('txt_energia'));
+  let cripto = Number(txtV('txt_cripto'));
+
+  const inizi = [
+    'Cammino dove '+tema+' cambia forma',
+    'Resto sveglio sul bordo di '+tema,
+    'Attraverso '+tema+' senza fare rumore',
+    'Mi perdo dove '+tema+' diventa segnale',
+    'Entro piano nel nome di '+tema,
+    'Raccolgo '+tema+' dalle crepe del giorno',
+    'Scendo dove '+tema+' non ha più voce'
+  ];
+
+  const immagini = idee.length ? idee : [
+    'cenere','nebbia','soglia','lampi','vetro incrinato',
+    'strada vuota','respiro','ombra','luce storta',
+    'pioggia','eco','marea','fuoco lento','cielo basso',
+    'polvere d’oro','porta socchiusa','stella caduta','filo rosso'
+  ];
+
+  const verbi = [
+    'brucia','chiama','trema','respira','si nasconde',
+    'ritorna','si spezza','si accende','mi attraversa',
+    'scivola','si rialza','mi sfida'
+  ];
+
+  const ritornelli = [
+    'non lasciarmi cadere',
+    'resta dove il cielo trema',
+    'portami oltre il rumore',
+    'fammi luce nel disordine',
+    'tienimi vivo nel temporale',
+    'cercami dove il mondo scompare',
+    'salvami dal nome che non dico',
+    'portami dove la notte si arrende'
+  ];
+
+  function pick(arr){
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  let ultimaImg = "";
+
+  function img(){
+    if(immagini.length === 1) return immagini[0];
+
+    let scelta = pick(immagini);
+    let tentativi = 0;
+
+    while(scelta === ultimaImg && tentativi < 10){
+      scelta = pick(immagini);
+      tentativi++;
+    }
+
+    ultimaImg = scelta;
+    return scelta;
+  }
+
+  let testo = '';
+
+  if(d.tipo === 'Descrizione YouTube'){
+    return d.titolo+txtNl+txtNl+
+    'Un progetto creativo in stile '+d.stile+', nato intorno al tema: '+tema+'.'+txtNl+txtNl+
+    'Atmosfera: '+txtMood()+'.'+txtNl+
+    'Immagini guida: '+d.idee+'.'+txtNl+txtNl+
+    'Un viaggio tra musica, parole e visioni personali.'+txtNl+txtNl+
+    '#Temeria #AlexCreative #MusicaOriginale';
+  }
+
+  if(d.tipo === 'Post Facebook SAFE'){
+    return 'Sto lavorando a un nuovo progetto creativo: '+d.titolo+'.'+txtNl+txtNl+
+    'Una piccola atmosfera fatta di musica, immagini e parole.'+txtNl+
+    'Un lavoro personale creato con passione.'+txtNl+txtNl+
+    'Link nei commenti.';
+  }
+
+  if(d.tipo === 'Concept album'){
+    return 'CONCEPT: '+d.titolo+txtNl+txtNl+
+    'Tema guida: '+tema+'.'+txtNl+
+    'Stile: '+d.stile+'.'+txtNl+
+    'Atmosfera: '+txtMood()+'.'+txtNl+txtNl+
+    'Trama:'+txtNl+
+    'Un personaggio attraversa una soglia interiore. Ogni brano apre una stanza diversa: desiderio, perdita, caos, memoria, rinascita.'+txtNl+txtNl+
+    'Capitoli possibili:'+txtNl+
+    '1. La soglia'+txtNl+
+    '2. Il segno nascosto'+txtNl+
+    '3. La stanza del caos'+txtNl+
+    '4. Dove brucia la memoria'+txtNl+
+    '5. Ritorno alla luce';
+  }
+
+  if(d.tipo === 'Canzone completa'){
+    testo += '[Strofa 1]'+txtNl+
+    pick(inizi)+','+txtNl+
+    'con '+img()+' fra le mani e '+img()+' nella voce,'+txtNl+
+    (nome ? nome+', ' : '')+'non tutto quello che perdo'+txtNl+
+    'smette davvero di chiamare.'+txtNl+txtNl+
+
+    '[Pre-Ritornello]'+txtNl+
+    'E se la notte mi confonde,'+txtNl+
+    'lascia un segno dove posso tornare,'+txtNl+
+    'che io ti cerco anche nel caos,'+txtNl+
+    'anche quando il tempo vuole cancellare.'+txtNl+txtNl+
+
+    '[Ritornello]'+txtNl+
+    pick(ritornelli)+','+txtNl+
+    'tra '+img()+' e '+img()+' saprò respirare,'+txtNl+
+    'se '+tema+' brucia piano,'+txtNl+
+    'noi saremo pioggia sopra il temporale.'+txtNl+txtNl+
+
+    '[Bridge]'+txtNl+
+    'Non dire tutto, lascia il mistero,'+txtNl+
+    'certe verità camminano piano,'+txtNl+
+    'fanno rumore solo dentro,'+txtNl+
+    'quando nessuno le sa guardare.';
+  }
+
+  else if(d.tipo === 'Ritornello potente'){
+    testo += '[Ritornello]'+txtNl+
+    pick(ritornelli)+','+txtNl+
+    'fammi attraversare '+tema+','+txtNl+
+    'con '+img()+' sulla pelle'+txtNl+
+    'e '+img()+' da salvare.'+txtNl+txtNl+
+    'Se tutto cade, io resto qui,'+txtNl+
+    'nel tuo nome che non so spiegare.';
+  }
+
+  else if(d.tipo === 'Strofa rock'){
+    testo += '[Strofa Rock]'+txtNl+
+    'Ho graffi sulle mani e '+tema+' nella voce,'+txtNl+
+    img()+' '+pick(verbi)+' quando il cielo tace,'+txtNl+
+    (nome ? nome+', ' : '')+'non chiedermi pace,'+txtNl+
+    'sono nato dove il cuore fa rumore.';
+  }
+
+  else if(d.tipo === 'Testo criptico'){
+    testo += 'Non aprire '+img()+' quando canta.'+txtNl+
+    'Non seguire '+img()+' se sorride troppo.'+txtNl+txtNl+
+    (nome ? nome+' ' : 'Qualcuno ')+'ha lasciato tre segni:'+txtNl+
+    'uno nel vento,'+txtNl+
+    'uno nel sangue,'+txtNl+
+    'uno dove nessuno guarda.'+txtNl+txtNl+
+    'Il resto non si dice.';
+  }
+
+  else if(d.tipo === 'Messaggio dolce'){
+    testo += (nome ? nome+', ' : '')+'ti mando un pensiero leggero,'+txtNl+
+    'come '+img()+' che trova casa.'+txtNl+txtNl+
+    'Che questa giornata ti porti serenità,'+txtNl+
+    'un sorriso piccolo,'+txtNl+
+    'e un po’ di luce buona nel cuore.';
+  }
+
+  else{
+    testo += 'Tra '+tema+' e '+img()+','+txtNl+
+    (nome ? nome+', ' : '')+'resta una voce sottile.'+txtNl+txtNl+
+    'Non chiede di essere capita,'+txtNl+
+    'chiede solo di essere sentita.';
+  }
+
+  if(cripto >= 8){
+    testo += txtNl+txtNl+
+    '[Strato nascosto]'+txtNl+
+    'C’è una parola che non entra nella frase,'+txtNl+
+    'ma tiene aperta tutta la stanza.';
+  }
+
+  if(energia >= 8){
+    testo += txtNl+txtNl+
+    '[Spinta finale]'+txtNl+
+    'E se il mondo cade giù,'+txtNl+
+    'io non mi spengo, io torno su.';
+  }
+
+  testo += txtNl+txtNl+txtCreaNucleoProfondo(d);
+
+  return testo+txtNl+txtNl+'---'+txtNl+
+  'Stile richiesto: '+d.stile+'. Lingua: '+d.lingua+'. Atmosfera: '+txtMood()+'.'+txtEvita();
+}
+function txtCreaNote(d){
+  return 'STRUTTURA CONSIGLIATA'+txtNl+txtNl+
+  'Apertura: immagine forte, frase breve, atmosfera immediata.'+txtNl+
+  'Centro: sviluppa il tema '+d.tema+' con simboli e tensione emotiva.'+txtNl+
+  'Climax: una frase memorabile, non troppo spiegata.'+txtNl+
+  'Chiusura: lascia mistero, non chiudere tutto.'+txtNl+txtNl+
+  'REGOLA TEMERIA'+txtNl+
+  'Meno spiegazione, più immagine. Meno cronaca, più simbolo.'+txtNl+txtNl+
+  'Mood: '+txtMood();
+}
+
+function txtCreaTitoli(d){
+  let t=d.tema;
+  let n=d.nome||'Temeria';
+  return [
+    'La soglia di '+n,
+    'Il segreto di '+t,
+    'Dove cadono le piume',
+    'Regina del silenzio',
+    'Il cuore non obbedisce',
+    'Pianeta nascosto',
+    'La notte tiene il nome',
+    'Fata senza catene',
+    'Il caos sa parlare',
+    'Non tutto deve fiorire'
+  ].join(txtNl);
+}
+
+function txtCreaSocial(d){
+  return 'YOUTUBE:'+txtNl+d.titolo+txtNl+txtNl+
+  'Un viaggio creativo in stile '+d.stile+', tra '+d.tema+' e immagini simboliche.'+txtNl+txtNl+
+  '#Temeria #AlexCreative #MusicaOriginale #ArteDigitale #VideoMusicale'+txtNl+txtNl+
+  'FACEBOOK SAFE:'+txtNl+
+  'Sto lavorando a un progetto personale fatto di musica, immagini e parole.'+txtNl+
+  'Questa è una piccola anteprima, creata con passione.'+txtNl+
+  'Link nei commenti.';
+}
+
+function txtCreaCheck(d){
+  return 'CONTROLLO QUALITA'+txtNl+txtNl+
+  '✔ Il testo ha un tema chiaro: '+d.tema+txtNl+
+  '✔ Lo stile scelto è coerente: '+d.stile+txtNl+
+  '✔ Il livello emotivo è: '+txtV('txt_intensita')+'/10'+txtNl+
+  '✔ La cripticità è: '+txtV('txt_cripto')+'/10'+txtNl+
+  '✔ Energia: '+txtV('txt_energia')+'/10'+txtNl+txtNl+
+  'Da verificare prima di pubblicare:'+txtNl+
+  '- evitare frasi troppo generiche'+txtNl+
+  '- mantenere almeno una immagine forte'+txtNl+
+  '- non spiegare tutto'+txtNl+
+  '- scegliere una frase centrale da usare come titolo o copertina'+txtEvita();
+}
+
+function txtCreaNucleoProfondo(d){
+  const nuclei={
+    verita:'Nucleo profondo: non sempre ciò che brilla viene riconosciuto. A volte il valore passa in silenzio mentre il rumore occupa la scena.',
+    identita:'Nucleo profondo: ogni persona porta una maschera e una stanza segreta. La verità non è sempre ciò che si mostra.',
+    tempo:'Nucleo profondo: il tempo non cancella davvero; sposta le cose in stanze più lontane, ma certe voci restano accese.',
+    societa:'Nucleo profondo: il mondo misura il valore con strumenti ciechi. Ciò che è autentico deve imparare a sopravvivere anche quando non viene visto.',
+    amore:'Nucleo profondo: amare non significa possedere; a volte significa restare fedeli a una luce che non puoi trattenere.',
+    rinascita:'Nucleo profondo: ogni caduta lascia una grammatica nuova. La ferita diventa linguaggio quando smette di chiedere permesso.'
+  };
+  const forme={
+    canzone:'Forma: immagini forti, ritornello memorabile, poche spiegazioni.',
+    monologo:'Forma: voce interiore, frasi intime, andamento confessionale.',
+    confessione:'Forma: verità detta piano, senza difendersi troppo.',
+    manifesto:'Forma: dichiarazione artistica, dignità, forza e visione.',
+    favolaOscura:'Forma: simboli, soglia, chiave, creatura, regola segreta.'
+  };
+  return (nuclei[d.argomento]||nuclei.verita)+txtNl+(forme[d.forma]||forme.canzone);
+}
+
+function txtMigliora(tipo){
+
+  const el = document.getElementById('txt_testo');
+
+  let testo = el.value.trim();
+
+  if(!testo){
+    alert("Prima genera o scrivi un testo.");
+    return;
+  }
+
+  // =========================
+  // CORREZIONE BASE
+  // =========================
+  if(tipo === 'grammatica'){
+
+    testo = testo
+
+      .replace(/[ \t]+/g,' ')
+      .replace(/\s+([,.!?;:])/g,'$1')
+      .replace(/([,.!?;:])([^\s\n])/g,'$1 $2')
+      .replace(/(^|[.!?]\s+)([a-zàèéìòù])/g,
+        (m,p,c)=>p+c.toUpperCase()
+      );
+
+    el.value = testo;
+
+    document.getElementById('txt_check').textContent =
+      '✅ Correzione base applicata: spazi, punteggiatura e maiuscole sistemate.';
+
+    toast("🧹 Correzione applicata");
+
+    return;
+  }
+
+  // =========================
+  // VERSIONE POETICA
+  // =========================
+  if(tipo === 'poetico'){
+
+    let poetico =
+`\n\n━━━━━━━━━━━━━━━━━━
+✨ VERSIONE PIÙ POETICA
+━━━━━━━━━━━━━━━━━━
+
+Le parole respirano più lentamente.
+Le immagini diventano simboli.
+La luce conta più della spiegazione.
+
+${testo}
+
+[Indicazione artistica]
+
+- meno spiegazione
+- più atmosfera
+- più immagini sospese
+- più musicalità
+- più mistero`;
+
+    el.value = poetico;
+
+    toast("✨ Versione poetica creata");
+
+    return;
+  }
+
+  // =========================
+  // VERSIONE ROCK
+  // =========================
+  if(tipo === 'rock'){
+
+    let rock =
+`\n\n━━━━━━━━━━━━━━━━━━
+🔥 VERSIONE ROCK
+━━━━━━━━━━━━━━━━━━
+
+${testo}
+
+[Spinta rock]
+
+- frasi più forti
+- ritmo più aggressivo
+- energia emotiva alta
+- immagini più taglienti
+- voce più viva
+
+Meno calma.
+Più impatto.`;
+
+    el.value = rock;
+
+    toast("🔥 Versione rock creata");
+
+    return;
+  }
+
+  // =========================
+  // VERSIONE CRIPTICA
+  // =========================
+  if(tipo === 'criptico'){
+
+    let cripto =
+`\n\n━━━━━━━━━━━━━━━━━━
+🕯️ VERSIONE CRIPTICA
+━━━━━━━━━━━━━━━━━━
+
+${testo}
+
+[Strato nascosto]
+
+Non dire tutto direttamente.
+
+Usa:
+- porte
+- piume
+- chiavi
+- stanze
+- ombre
+- specchi
+- voci lontane
+
+Lascia che il significato resti incompleto.`;
+
+    el.value = cripto;
+
+    toast("🕯️ Versione criptica creata");
+
+    return;
+  }
+
+}
+
+function txtScava(){
+  const tema=txtV('txt_tema')||'ciò che non viene visto';
+  const arg=txtV('txt_argomento')||'verita';
+  const domande=[
+    'Qual è la ferita nascosta dietro questo tema?',
+    'Chi resta invisibile in questa storia?',
+    'Che cosa viene scambiato per errore ma in realtà è verità?',
+    'Quale immagine può dire tutto senza spiegarlo?',
+    'Quale frase potrebbe diventare il centro del ritornello?'
+  ];
+  const output='SCAVO PROFONDO SU: '+tema+txtNl+txtNl+
+  'Direzione: '+arg+txtNl+txtNl+
+  domande.map((d,i)=>(i+1)+'. '+d).join(txtNl)+txtNl+txtNl+
+  'Possibile frase-gancio:'+txtNl+
+  'Non tutto ciò che vale riesce a passare dalla porta del rumore.';
+  txtSet('txt_note',output);
+}
+
+function txtVaria(){
+  if(!txtV('txt_tema')){
+    document.getElementById('txt_tema').value=txtPick(['amore','caos','destino','memoria','ossessione','rinascita']);
+  }
+  txtGeneraTutto();
+}
+
+function txtRiempiTemeria(){
+  document.getElementById('txt_tipo').value='Canzone completa';
+  document.getElementById('txt_stile').value='Temeria fata delle piume';
+  document.getElementById('txt_tema').value='magia e presenza invisibile';
+  document.getElementById('txt_nome').value='Temeria';
+  document.getElementById('txt_titolo').value='La Fata delle Piume';
+  document.getElementById('txt_idee').value='piume, luna, sogno, luce, vento, voce lontana';
+  txtGeneraTutto();
+}
+
+function txtRiempiRegina(){
+  document.getElementById('txt_tipo').value='Canzone completa';
+  document.getElementById('txt_stile').value='Regina di Cuori';
+  document.getElementById('txt_tema').value='amore, caos e destino';
+  document.getElementById('txt_nome').value='Regina';
+  document.getElementById('txt_titolo').value='Regina di Cuori';
+  document.getElementById('txt_idee').value='cuore, corona, labirinto, pianeta segreto, fiamma, ossessione';
+  txtGeneraTutto();
+}
+
+function txtSalva(){
+
+  let testo = document.getElementById('txt_testo').value.trim();
+
+  if(!testo){
+    alert("Prima genera o scrivi un testo.");
+    return;
+  }
+
+  let arr = JSON.parse(
+    localStorage.getItem('temeriaTextForge') || '[]'
+  );
+
+  arr.push({
+    titolo: txtV('txt_titolo') || 'Senza titolo',
+    data: new Date().toLocaleString(),
+    testo: testo,
+    note: document.getElementById('txt_note').textContent || ''
+  });
+
+  localStorage.setItem(
+    'temeriaTextForge',
+    JSON.stringify(arr)
+  );
+
+  txtArchivio();
+
+  toast("💾 Progetto salvato");
+}
+
+function txtArchivio(){
+  let arr=JSON.parse(localStorage.getItem('temeriaTextForge')||'[]');
+  let box=document.getElementById('txt_archivio');
+  box.innerHTML='';
+  arr.forEach((x,i)=>{
+    box.innerHTML += '<div class="card"><b>'+x.titolo+'</b><br><span class="small">'+x.data+'</span><br><button class="soft" type="button" onclick="txtApri('+i+')">Apri</button><button class="danger" type="button" onclick="txtDel('+i+')">X</button></div>';
+  });
+}
+
+function txtApri(i){
+  let arr = JSON.parse(localStorage.getItem('temeriaTextForge') || '[]');
+  let item = arr[i];
+
+  txtSet('txt_testo', item.testo || '');
+  txtSet('txt_note', item.note || '');
+  document.getElementById('txt_titolo').value = item.titolo || '';
+
+  document.getElementById('txt_testo').scrollIntoView({
+    behavior: 'smooth',
+    block: 'center'
+  });
+
+  toast("📂 Testo aperto");
+}
+
+function txtDel(i){
+  let arr=JSON.parse(localStorage.getItem('temeriaTextForge')||'[]');
+  arr.splice(i,1);
+  localStorage.setItem('temeriaTextForge',JSON.stringify(arr));
+  txtArchivio();
+}
+/* ====================== TEMERIA TEXT LAB PRO ====================== */
+
+function labGet(id){
+  const el=document.getElementById(id);
+  return el ? el.value.trim() : "";
+}
+
+function labSet(id,val){
+  const el=document.getElementById(id);
+  if(el) el.value=val;
+}
+
+function labPrepareSuno(){
+
+  let testo=document.getElementById('txt_testo').value;
+
+  if(!testo){
+    alert("Prima genera o scrivi un testo.");
+    return;
+  }
+
+  testo=testo
+
+    // elimina markdown
+    .replace(/\*\*/g,'')
+    .replace(/__/g,'')
+
+    // elimina linee decorative
+    .replace(/─+/g,'')
+
+    // converte titoli artistici
+    .replace(/\*\*\*\((.*?)\)\*\*\*/g,'[$1]')
+
+    // 🔥 taglia tutto dopo ---
+    .replace(/---[\s\S]*/,'')
+
+    // 🔥 rimuove note finali
+    .replace(/Nucleo profondo:[\s\S]*?(?=\n\[|$)/g,'')
+    .replace(/Forma:[\s\S]*?(?=\n\[|$)/g,'')
+    .replace(/Stile richiesto:[\s\S]*/g,'')
+
+    // pulizia spazi
+    .replace(/[ \t]+/g,' ')
+    .replace(/\n{3,}/g,'\n\n')
+
+    // rimuove emoji
+    .replace(/[\u{1F300}-\u{1FAFF}]/gu,'')
+
+    .trim();
+
+  document.getElementById('lab_suno').value=testo;
+
+  toast("🎵 Testo preparato per Suno");
+}
+
+function labSaveProject(){
+
+  const progetto={
+    titolo:labGet('lab_title') || 'Senza titolo',
+    versione:labGet('lab_version') || 'v1',
+    stato:labGet('lab_status'),
+    prompt:labGet('lab_prompt'),
+    note:labGet('lab_notes'),
+    testoOriginale:document.getElementById('txt_testo').value,
+    testoSuno:document.getElementById('lab_suno').value,
+    data:new Date().toLocaleString()
+  };
+
+  let arr=JSON.parse(localStorage.getItem('temeriaTextLabPro') || '[]');
+
+  arr.push(progetto);
+
+  localStorage.setItem(
+    'temeriaTextLabPro',
+    JSON.stringify(arr)
+  );
+
+  labRefreshArchive();
+
+  toast("💾 Progetto salvato");
+}
+
+function labRefreshArchive(){
+
+  const box=document.getElementById('lab_archive');
+
+  if(!box) return;
+
+  let arr=JSON.parse(localStorage.getItem('temeriaTextLabPro') || '[]');
+
+  box.innerHTML='';
+
+  arr.forEach((p,i)=>{
+
+    box.innerHTML += `
+      <div class="card">
+        <b>${p.titolo}</b><br>
+        <span class="small">
+          ${p.versione} • ${p.stato}<br>
+          ${p.data}
+        </span>
+        <br><br>
+
+        <button class="soft" type="button"
+          onclick="labOpen(${i})">
+          Apri
+        </button>
+
+        <button class="copy-btn" type="button"
+          onclick="labCopySuno(${i})">
+          Copia Suno
+        </button>
+
+        <button class="danger" type="button"
+          onclick="labDelete(${i})">
+          X
+        </button>
+      </div>
+    `;
+  });
+}
+
+function labOpen(i){
+
+  let arr=JSON.parse(localStorage.getItem('temeriaTextLabPro') || '[]');
+
+  const p=arr[i];
+
+  labSet('lab_title',p.titolo);
+  labSet('lab_version',p.versione);
+  labSet('lab_prompt',p.prompt);
+  labSet('lab_notes',p.note);
+
+  document.getElementById('lab_status').value=p.stato;
+
+  document.getElementById('txt_testo').value=p.testoOriginale || '';
+
+  document.getElementById('lab_suno').value=p.testoSuno || '';
+
+  toast("📂 Progetto aperto");
+}
+
+function labDelete(i){
+
+  let arr=JSON.parse(localStorage.getItem('temeriaTextLabPro') || '[]');
+
+  arr.splice(i,1);
+
+  localStorage.setItem(
+    'temeriaTextLabPro',
+    JSON.stringify(arr)
+  );
+
+  labRefreshArchive();
+
+  toast("🗑️ Progetto eliminato");
+}
+
+function labCopySuno(i){
+
+  let arr=JSON.parse(localStorage.getItem('temeriaTextLabPro') || '[]');
+
+  navigator.clipboard.writeText(
+    arr[i].testoSuno || ''
+  );
+
+  toast("📋 Copiato");
+}
+
+function labDownloadTxt(){
+
+  const titolo=labGet('lab_title') || 'testo';
+
+  const testo=
+`TITOLO: ${labGet('lab_title')}
+
+VERSIONE: ${labGet('lab_version')}
+
+STATO: ${labGet('lab_status')}
+
+PROMPT:
+${labGet('lab_prompt')}
+
+NOTE:
+${labGet('lab_notes')}
+
+==============================
+
+TESTO:
+
+${document.getElementById('txt_testo').value}
+
+==============================
+
+VERSIONE SUNO:
+
+${document.getElementById('lab_suno').value}
+`;
+
+  const blob=new Blob([testo],{
+    type:'text/plain'
+  });
+
+  const a=document.createElement('a');
+
+  a.href=URL.createObjectURL(blob);
+
+  a.download=titolo+'.txt';
+
+  a.click();
+
+  toast("⬇️ TXT scaricato");
+}
+
+function labDownloadJson(){
+
+  const data={
+    titolo:labGet('lab_title'),
+    versione:labGet('lab_version'),
+    stato:labGet('lab_status'),
+    prompt:labGet('lab_prompt'),
+    note:labGet('lab_notes'),
+    testoOriginale:document.getElementById('txt_testo').value,
+    testoSuno:document.getElementById('lab_suno').value
+  };
+
+  const blob=new Blob(
+    [JSON.stringify(data,null,2)],
+    {type:'application/json'}
+  );
+
+  const a=document.createElement('a');
+
+  a.href=URL.createObjectURL(blob);
+
+  a.download=(labGet('lab_title') || 'progetto')+'.json';
+
+  a.click();
+
+  toast("⬇️ JSON scaricato");
+}
+function txtPulisci(){
+  ['txt_tema','txt_nome','txt_titolo','txt_idee','txt_vietate'].forEach(id=>document.getElementById(id).value='');
+  ['txt_testo','txt_note','txt_titoli','txt_social','txt_check'].forEach(id=>txtSet(id,''));
+}
+
+function txtDuplicaVersione(){
+
+  let testo = document.getElementById('txt_testo').value.trim();
+
+  if(!testo){
+    alert("Nessun testo da duplicare.");
+    return;
+  }
+
+  let titolo = txtV('txt_titolo') || 'Progetto';
+
+  let nuovoTitolo = titolo + ' - copia';
+
+  let arr = JSON.parse(
+    localStorage.getItem('temeriaTextForge') || '[]'
+  );
+
+  arr.push({
+    titolo: nuovoTitolo,
+    data: new Date().toLocaleString(),
+    testo: testo,
+    note: 'Versione duplicata'
+  });
+
+  localStorage.setItem(
+    'temeriaTextForge',
+    JSON.stringify(arr)
+  );
+
+  txtArchivio();
+
+  document.getElementById('txt_titolo').value = nuovoTitolo;
+
+  toast("🪞 Versione duplicata e salvata");
+
+  document.getElementById('txt_archivio').scrollIntoView({
+    behavior:'smooth'
+  });
+}
+function generaNomeUnico(){
+  let base = pageEl().value.trim();
+
+  if(!base){
+    base = "temeria-video";
+  }
+
+  base = cleanPage(base);
+
+  const stamp = Date.now();
+  const random = Math.floor(Math.random() * 1000);
+  const nome = base + "-" + stamp + "-" + random;
+
+  pageEl().value = nome;
+  setVal('cacheVersion', String(stamp));
+  aggiornaLinkPronti();
+
+  alert("Nome anti-cache generato:\n" + nome);
+}
+function swVal(id){
+  const el=document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+function swSet(id,txt){
+  const el=document.getElementById(id);
+  if(el) el.textContent=txt;
+}
+
+function swCleanTag(text){
+  return String(text||'Temeria')
+    .toLowerCase()
+    .replace(/[àá]/g,'a')
+    .replace(/[èé]/g,'e')
+    .replace(/[ìí]/g,'i')
+    .replace(/[òó]/g,'o')
+    .replace(/[ùú]/g,'u')
+    .replace(/[^a-z0-9]/g,'')
+    .slice(0,30) || 'Temeria';
+}
+
+function swEsempioTemeria(){
+  document.getElementById('sw_titolo').value='Temeria – La Fata delle Piume';
+  document.getElementById('sw_durata').value='30 secondi';
+  document.getElementById('sw_mood').value='magica, poetica e misteriosa';
+  document.getElementById('sw_frase').value='Un frammento di musica e poesia, tra piume, luce e memoria.';
+  document.getElementById('sw_youtube').value='';
+  document.getElementById('sw_sito').value='https://alexcreative.netlify.app/public/temeria-fata-piume.html';
+  document.getElementById('sw_formato').value='youtube';
+  document.getElementById('sw_musica').value='30';
+  document.getElementById('sw_firma').value='Alex Creative';
+  swGeneraTutto();
+}
+
+function swGeneraTutto(){
+  const titolo=swVal('sw_titolo') || 'Temeria – La Fata delle Piume';
+  const durata=swVal('sw_durata') || '30 secondi';
+  const mood=swVal('sw_mood') || 'magica, poetica e misteriosa';
+  const frase=swVal('sw_frase') || 'Un frammento di musica e immagini.';
+  const youtube=swVal('sw_youtube');
+  const sito=swVal('sw_sito');
+  const formato=swVal('sw_formato') || 'youtube';
+  const musica=swVal('sw_musica') || '30';
+  const firma=swVal('sw_firma') || 'Alex Creative';
+  const tag=swCleanTag(titolo);
+
+  const fb=`✨ ${titolo}\n\n${frase}\n\n🎬 Guarda il video qui sotto.\n\n${youtube ? youtube : 'Inserisci qui il link YouTube quando è pubblicato.'}`;
+
+  const commento=`Per chi vuole scoprire anche la pagina completa del progetto:\n${sito || 'Inserisci qui il link del sito AlexCreative.'}\n\nConsiglio: pubblica prima il post YouTube, poi aggiungi questo commento dopo qualche minuto.`;
+
+  const ytDesc=`${titolo}\n\n${frase}\n\nUn progetto creativo firmato ${firma}.\nAtmosfera ${mood}.\n\n🎧 Musica / anteprima: ${musica} secondi\n\n${sito ? 'Scopri la pagina completa del progetto:\n'+sito+'\n\n' : ''}Grazie per l’ascolto e per il supporto.\n\n#${tag} #Temeria #AlexCreative #MusicaOriginale #ArteDigitale`;
+
+  const tags=`#${tag} #Temeria #AlexCreative #MusicaOriginale #VideoMusicale #ArteDigitale #MusicaItaliana #PoeticMusic #FantasyMusic #CreativeProject`;
+
+  const scaletta=`SCALLETTA VIDEO ${durata.toUpperCase()}\n\n0-3 sec\nApertura lenta sull'immagine centrata. Piccolo zoom in avanti. Testo breve: “${titolo}”.\n\n3-10 sec\nEntrano i primi secondi di musica. Movimento morbido su piume, luce, volto, cielo o dettaglio simbolico.\n\n10-22 sec\nMomento centrale: mostra la parte più emozionale. Inserisci la frase:\n“${frase}”\n\n22-${musica} sec\nPiccolo climax musicale. Effetto luce, dissolvenza, firma finale: ${firma}.\n\nChiusura\nMostra titolo + invito leggero: “Guarda il progetto completo”.`;
+
+  const formatoTxt = formato==='short' ? '1080x1920 verticale, soggetto centrato, spazio testo alto e basso' : formato==='facebook' ? '1200x630 orizzontale, soggetto centrato, nessun taglio ai lati' : '1280x720 orizzontale, soggetto centrato, safe area centrale';
+
+  const cover=`PROMPT COPERTINA CENTRATA\n\nCrea una copertina ${formatoTxt}.\nTema: ${titolo}.\nAtmosfera: ${mood}.\nElementi visivi: piume luminose, luce delicata, cielo notturno, figura poetica, energia musicale.\nComposizione: soggetto principale perfettamente centrato, titolo leggibile, niente elementi importanti ai bordi.\nStile: cinematografico, elegante, magico, alta qualità.\nNon usare loghi YouTube ufficiali. Puoi usare un simbolo play generico originale, pulito e non copiato.`;
+
+  const strategy=`STRATEGIA SICURA FACEBOOK ➜ YOUTUBE ➜ SITO\n\n1. Carica il video su YouTube con copertina centrata e musica di circa ${musica} secondi.\n2. Nella descrizione YouTube metti il link al sito AlexCreative.\n3. Su Facebook pubblica il link YouTube, non il link Netlify diretto.\n4. Dopo qualche minuto aggiungi nei commenti il link del sito, se vuoi.\n5. Non usare parametri tipo ?v= nel post Facebook.\n6. Se Facebook rimuove l’anteprima del sito, non insistere: usa YouTube come ponte principale.\n\nObiettivo: Facebook non blocca YouTube, YouTube porta traffico al progetto completo.`;
+
+  swSet('sw_fb',fb);
+  swSet('sw_commento',commento);
+  swSet('sw_yt_desc',ytDesc);
+  swSet('sw_tags',tags);
+  swSet('sw_scaletta',scaletta);
+  swSet('sw_cover',cover);
+  swSet('sw_strategy',strategy);
+}
+
+function swPulisci(){
+  ['sw_titolo','sw_frase','sw_youtube','sw_sito','sw_musica','sw_firma'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.value='';
+  });
+  ['sw_fb','sw_commento','sw_yt_desc','sw_tags','sw_scaletta','sw_cover','sw_strategy'].forEach(id=>swSet(id,''));
+}
+/* ====================== LYRICS SITE FORGE ====================== */
+
+function lyVal(id){
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : "";
+}
+
+function lySet(id,value){
+  const el = document.getElementById(id);
+  if(el) el.value = value;
+}
+
+function lyEsc(s){
+  return String(s || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;");
+}
+
+
+function lyGenerate(){
+  const title = lyVal("ly_title") || "Titolo canzone";
+  const subtitle = lyVal("ly_subtitle") || "Un viaggio tra parole, musica e immagini.";
+  const cover = lyVal("ly_cover") || "https://alex-creative-site.vercel.app/regina-cover.jpg";
+  const spotify = lyVal("ly_spotify") || "https://open.spotify.com/";
+  const youtube = lyVal("ly_youtube") || "https://youtube.com/";
+  const text = lyVal("ly_text") || "[Inserisci qui il testo della canzone]";
+  const fit = lyVal("ly_fit") || "cover";
+
+  let size = "cover";
+  let position = "center";
+
+  if(fit === "contain"){
+    size = "contain";
+    position = "center";
+  }
+
+  if(fit === "top"){
+    size = "cover";
+    position = "top center";
+  }
+
+  if(fit === "left"){
+    size = "cover";
+    position = "center left";
+  }
+
+  const block = `
+<article class="video-card">
+
+  <div
+    class="lyrics-cover"
+    style="
+      background-image:url('${cover}');
+      background-size:${size};
+      background-position:${position};
+    ">
+  </div>
+
+  <div class="video-content">
+
+    <div class="video-tag">🎵 Testo ufficiale</div>
+
+    <h3>${lyEsc(title)}</h3>
+
+    <p class="lead" style="font-size:15px;">
+      ${lyEsc(subtitle)}
+    </p>
+
+    <div class="lyrics-box">
+${lyEsc(text)}
+    </div>
+
+    <div class="button-row" style="margin-top:20px;">
+
+      <a href="${spotify}"
+         target="_blank"
+         class="btn primary">
+         🎧 Spotify
+      </a>
+
+      <a href="${youtube}"
+         target="_blank"
+         class="btn secondary">
+         ▶ YouTube
+      </a>
+
+    </div>
+
+  </div>
+</article>`.trim();
+
+  lySet("ly_output", block);
+}
+
+
+function lyExampleRegina(){
+  lySet("ly_title","Regina di Cuori");
+  lySet("ly_subtitle","Un viaggio tra desiderio, caos e sentimenti che bruciano lentamente.");
+  lySet("ly_cover","https://alex-creative-site.vercel.app/regina-cover.jpg");
+  lySet("ly_spotify","https://open.spotify.com/intl-it/track/5lev45rIr5bD3IoxerkhjI");
+  lySet("ly_youtube","https://www.youtube.com/watch?v=3HIP4oIB9Io");
+  lySet("ly_text","[Inserisci qui il testo completo di Regina di Cuori]");
+  lyGenerate();
+}
+
+function lyExampleTemeria(){
+  lySet("ly_title","Temeria - La Fata delle Piume");
+  lySet("ly_subtitle","Un testo sospeso tra piume, luce, memoria e presenza invisibile.");
+  lySet("ly_cover","https://alex-creative-site.vercel.app/temeria-preview.jpg");
+  lySet("ly_spotify","");
+  lySet("ly_youtube","https://www.youtube.com/watch?v=duCUKxBCqiU");
+  lySet("ly_text","[Inserisci qui il testo completo di Temeria - La Fata delle Piume]");
+  lyGenerate();
+}
+
+function lyClear(){
+  ["ly_title","ly_subtitle","ly_cover","ly_spotify","ly_youtube","ly_text","ly_output"].forEach(id => lySet(id,""));
+  lySet("ly_fit","cover");
+}
+function lySendToSiteForge(){
+  const block = document.getElementById("ly_output").value.trim();
+
+  if(!block){
+    alert("Prima genera il blocco Lyrics.");
+    return;
+  }
+
+  showSection("siteForge");
+
+  const sfIndex = document.getElementById("sf_index");
+  const sfOutput = document.getElementById("sf_output");
+
+  if(!sfIndex.value.trim()){
+    sfOutput.value = block;
+    toast("🎵 Blocco Lyrics inviato. Ora incolla l'index originale nel Site Forge.");
+    return;
+  }
+
+  let index = sfIndex.value;
+  let updated = false;
+
+  const markerLyrics = '<!-- LYRICS_AUTO_INSERT -->';
+
+  if(index.includes(markerLyrics)){
+    index = index.replace(markerLyrics, block + "\n\n" + markerLyrics);
+    updated = true;
+  }
+
+  if(!updated && index.includes('<section class="page" id="page-chat">')){
+    index = index.replace(
+      '<section class="page" id="page-chat">',
+      block + '\n\n<section class="page" id="page-chat">'
+    );
+    updated = true;
+  }
+
+  if(!updated && index.includes('<!-- 🔥 SPOTIFY SECTION -->')){
+    index = index.replace(
+      '<!-- 🔥 SPOTIFY SECTION -->',
+      block + '\n\n<!-- 🔥 SPOTIFY SECTION -->'
+    );
+    updated = true;
+  }
+
+  if(!updated){
+    sfOutput.value = block;
+    toast("⚠️ Punto automatico non trovato. Blocco copiato nel risultato: incollalo manualmente nel sito.");
+    return;
+  }
+
+  sfOutput.value = index;
+  toast("✅ Index aggiornato con il testo Lyrics!");
+}
+function sfGet(id){
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : "";
+}
+
+function sfSet(id,value){
+  const el = document.getElementById(id);
+  if(el) el.value = value;
+}
+
+function sfYoutubeId(url){
+  if(!url) return "";
+  if(url.includes("watch?v=")) return url.split("watch?v=")[1].split("&")[0];
+  if(url.includes("youtu.be/")) return url.split("youtu.be/")[1].split("?")[0];
+  if(url.includes("/embed/")) return url.split("/embed/")[1].split("?")[0];
+  return url.trim();
+}
+
+function sfCard(title,youtube,desc){
+  const id = sfYoutubeId(youtube);
+  return `
+<article class="video-card">
+  <div class="video-frame">
+    <iframe
+      src="https://www.youtube.com/embed/${id}"
+      title="${title}"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen>
+    </iframe>
+  </div>
+  <div class="video-content">
+    <div class="video-tag">▶ YouTube ufficiale</div>
+    <h3>${title}</h3>
+    <p class="lead" style="font-size:15px;">
+      ${desc || "Nuovo contenuto ufficiale."}
+    </p>
+  </div>
+</article>`;
+}
+
+function sfTrailerTemeriaCard(title,htmlLink,previewImg,desc){
+  return `
+<article class="video-card">
+  <div class="video-frame" style="position:relative;">
+    <a href="${htmlLink}" target="_blank" style="display:block; position:relative; width:100%; height:100%;">
+      <img
+        src="${previewImg || 'https://alex-creative-site.vercel.app/temeria-preview.jpg'}"
+        alt="${title}"
+        style="width:100%; height:100%; object-fit:cover; display:block;"
+      >
+      <div style="
+        position:absolute;
+        inset:0;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        background:rgba(0,0,0,0.35);
+      ">
+        <div style="
+          width:70px;
+          height:70px;
+          border-radius:50%;
+          background:white;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          font-size:26px;
+          color:black;
+          box-shadow:0 0 30px rgba(255,255,255,0.5);
+        ">▶</div>
+      </div>
+    </a>
+  </div>
+  <div class="video-content">
+    <div class="video-tag">🎬 Trailer / Temeria Video HTML</div>
+    <h3>${title}</h3>
+    <p class="lead" style="font-size:15px;">
+      ${desc || "Trailer creato con Temeria Video HTML."}
+    </p>
+  </div>
+</article>`;
+}
+function sfRun(){
+  let index = sfGet("sf_index");
+  const title = sfGet("sf_title");
+  const youtube = sfGet("sf_youtube");
+  const desc = sfGet("sf_desc");
+  const position = sfGet("sf_position");
+  const type = sfGet("sf_type");
+
+  if(!index){
+    alert("Incolla prima l'index del sito.");
+    return;
+  }
+
+  if(!title || !youtube){
+    alert("Inserisci titolo e link YouTube.");
+    return;
+  }
+
+ let card = "";
+
+if(type === "trailerTemeria"){
+  card = sfTrailerTemeriaCard(
+    title,
+    youtube || "https://alex-creative-site.vercel.app/temeria-video.html",
+    "https://alex-creative-site.vercel.app/temeria-preview.jpg",
+    desc
+  );
+}else{
+  card = sfCard(title,youtube,desc);
+}
+
+if(position === "replaceTemeria"){
+    index = index.replace(
+      /<article class="temeria-wide">[\s\S]*?<\/article>/,
+      card
+    );
+  }
+
+ if(position === "addTop"){
+  index = index.replace(
+    '<div class="video-grid">',
+    '<div class="video-grid">\n' + card
+  );
+}
+
+if(position === "addBottom"){
+  index = index.replace(
+    '</div>\n  <!-- 🔥 SPOTIFY SECTION -->',
+    card + '\n</div>\n  <!-- 🔥 SPOTIFY SECTION -->'
+  );
+}
+
+sfSet("sf_output", index);
+  alert("Index aggiornato generato!");
+}
+function sfExampleTemeria(){
+  sfSet("sf_title","Temeria – La Fata delle Piume");
+  sfSet("sf_type","trailerTemeria");
+  sfSet("sf_position","addTop");
+  sfSet("sf_youtube","https://alexcreative.netlify.app/public/temeria-video.html");
+  sfSet("sf_spotify","");
+  sfSet("sf_desc","Trailer poetico e musicale dedicato a Temeria, tra piume, luce e memoria.");
+  toast("🪶 Esempio Temeria caricato");
+}
+
+function sfClear(){
+  ["sf_index","sf_title","sf_youtube","sf_spotify","sf_desc","sf_output"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.value="";
+  });
+
+  const type=document.getElementById("sf_type");
+  if(type) type.value="youtube";
+
+  const pos=document.getElementById("sf_position");
+  if(pos) pos.value="replaceTemeria";
+
+  toast("🧹 Site Forge pulito");
+}
+</script>
+<div id="toast"></div>
+</body>
+</html>
